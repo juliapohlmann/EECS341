@@ -34,14 +34,347 @@ def showSignIn():
 def showExhibitPage():
     return render_template('exhibit.html')
 
+@app.route('/showDonorPage')
+def showDonorPage():
+    return render_template('donor.html')
+
 @app.route('/showAdmin')
 def showAdmin():
     return render_template('admin.html')
+
+@app.route('/showPiecePage')
+def showPiecePage():
+    return render_template('piece.html')
 
 @app.route('/logout')
 def logout():
     session.pop('user',None)
     return redirect('/')
+
+@app.route('/getDonationsByDate', methods=['POST'])
+def getDonationsByDate():
+	try:
+    	# return json.dumps({'message':'here'})
+
+		_date = request.form['inputStartDate']
+		# return json.dumps({'message': _piece})
+
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getdonationsbydate',(_date,))
+		pieces = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+		# return json.dumps({'message': pieces})
+
+		pieces_dict = []
+		for piece in pieces:
+			piece_dict = {
+					'DonorName': piece[0],
+					'PieceName': piece[1]}
+			pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+		return json.dumps(pieces_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+
+@app.route('/showAllDonatedPieces')
+def showAllDonatedPieces():
+    try:
+    	# return json.dumps({'yay':'abc'})
+    	# _type = request.form.get('typeSelectList')
+    	# _piece = request.form['pieceSelectList']
+
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getallpiecesdonated',())
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Name': piece[0],
+                    'Artist':piece[1]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error1':str(ex)})
+
+@app.route('/showAllDonors')
+def showAllDonors():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getalldonors',())
+        donors = cursor.fetchall()
+
+        donors_dict = []
+        for donor in donors:
+            donor_dict = {
+                    'Id': donor[0],
+                    'Name': donor[1]}
+            donors_dict.append(donor_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(donors_dict)
+        
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+@app.route('/getpiecelocation', methods=['POST'])
+def getpiecelocation():
+	try:
+    	# return json.dumps({'message':'here'})
+
+		_piece = request.form['pieceUnavailableSelectList']
+		# return json.dumps({'message': _piece})
+
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getpiecelocation',(_piece,))
+		pieces = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+		# return json.dumps({'message': pieces})
+
+		pieces_dict = []
+		for piece in pieces:
+			piece_dict = {
+					'ExhibitName': piece[0],
+					'ExhibitLocation': piece[1]}
+			pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+		return json.dumps(pieces_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+
+@app.route('/getPiecesByTimePeriod', methods=['POST'])
+def getPiecesByTimePeriod():
+	try:
+    	# return json.dumps({'message':'here'})
+
+		_startDate = request.form['inputStartDate']
+		_endDate = request.form['inputEndDate']    	
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getpiecesintimerange',(_startDate,_endDate))
+		pieces = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+
+		pieces_dict = []
+		for piece in pieces:
+			piece_dict = {
+					'Id': piece[0],
+					'Name': piece[1],
+					'Artist': piece[2]}
+			pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+		return json.dumps(pieces_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+
+@app.route('/getPiecesByType', methods=['POST'])
+def getPiecesByType():
+    try:
+    	# return json.dumps({'yay':'abc'})
+    	_type = request.form.get('typeSelectList')
+    	# _piece = request.form['pieceSelectList']
+
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getpiecesbytype',(_type,))
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Name': piece[1],
+                    'Artist':piece[2]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error1':str(ex)})
+
+@app.route('/getPiecesByArtist', methods=['POST'])
+def getPiecesByArtist():
+    try:
+    	# return json.dumps({'yay':'abc'})
+    	_artist = request.form.get('artistSelectList')
+    	# _piece = request.form['pieceSelectList']
+
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getpiecesbyartist',(_artist,))
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Name': piece[1]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error1':str(ex)})
+
+@app.route('/getArtists')
+def getArtists():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getartists',())
+        artists = cursor.fetchall()
+
+        artists_dict = []
+        for artist in artists:
+            artist_dict = {
+                    'Artist': artist[0]}
+            artists_dict.append(artist_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(artists_dict)
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+@app.route('/getPieceById', methods=['POST'])
+def getPieceById():
+    try:
+    	# return json.dumps({'yay':'abc'})
+    	_piece = request.form.get('pieceSelectList')
+    	# _piece = request.form['pieceSelectList']
+
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getpiecebyid',(_piece,))
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Type': piece[1],
+                    'Artist': piece[2],
+                    'Date_Created': piece[3],
+                    'Piece_Desc': piece[4],
+                    'Available': piece[5],
+                    'Name': piece[6]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error1':str(ex)})
+
+@app.route('/showAllPieces')
+def showAllPieces():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getallpieces',())
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Type': piece[1],
+                    'Artist': piece[2],
+                    'Date_Created': piece[3],
+                    'Piece_Desc': piece[4],
+                    'Available': piece[5],
+                    'Name': piece[6]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+        
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+@app.route('/getExhibitsByLocation', methods=['POST'])
+def getExhibitsByLocation():
+	try:
+    	# return json.dumps({'message':'here'})
+		_location = request.form.get('locationSelectList')
+		# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getexhibitbylocation',(_location,))
+		exhibits = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+
+		exhibits_dict = []
+		for exhibit in exhibits:
+			exhibit_dict = {
+					'Id': exhibit[0],
+					'Name': exhibit[1]}
+			exhibits_dict.append(exhibit_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+		return json.dumps(exhibits_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+    
+@app.route('/getLocations')
+def getLocations():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getlocations',())
+        locations = cursor.fetchall()
+
+        locations_dict = []
+        for location in locations:
+            location_dict = {
+                    'Location': location[0]
+                    }
+            locations_dict.append(location_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(locations_dict)
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+@app.route('/getPiecesFromExhibitByType', methods=['POST'])
+def getPiecesFromExhibitByType():
+    try:
+    	# return json.dumps({'message':'here'})
+
+    	_exhibit = request.form.get('exhibitSelectList1')
+    	_type = request.form.get('typeSelectList')
+    	# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
+
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getpiecesfromexhibitbytype',(_exhibit, _type))
+        pieces = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Name': piece[1],
+                    'Artist': piece[2]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error1':str(ex)})
+
+@app.route('/getPieceTypes')
+def getPieceTypes():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getpiecetypes',())
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Type': piece[0]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
     
 @app.route('/getExhibitsByTimeFrame', methods=['POST'])
 def getExhibitsByTimeFrame():
@@ -143,28 +476,43 @@ def showAllExhibits():
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
 
+@app.route('/getUnavailablePieces')
+def getUnavailablePieces():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getunavailablepieces',())
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Name': piece[1],
+                    'Artist': piece[2]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
 
 @app.route('/getAvailablePieces')
 def getAvailablePieces():
     try:
-        if session.get('user'):
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getavailablepieces',())
+        pieces = cursor.fetchall()
 
-            con = mysql.connect()
-            cursor = con.cursor()
-            cursor.callproc('getavailablepieces',())
-            pieces = cursor.fetchall()
-
-            pieces_dict = []
-            for piece in pieces:
-                piece_dict = {
-                        'Id': piece[0],
-                        'Name': piece[1],
-                        'Artist': piece[2]}
-                pieces_dict.append(piece_dict)
-                # return json.dumps({'yay':str(exhibits_dict)})
-            return json.dumps(pieces_dict)
-        else:
-			return json.dumps({'error':'Unauthorized access, please log in'})
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Name': piece[1],
+                    'Artist': piece[2]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
 

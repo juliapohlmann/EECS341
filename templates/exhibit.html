@@ -30,6 +30,52 @@
               $(exhibit).val(value.Id);
               $(exhibit).text(value.Name);
               $('#exhibitSelectList').append(exhibit);
+              $('#exhibitSelectList1').append(exhibit);
+
+            });
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
+      }),
+      $(function(){
+        $.ajax({
+          url : '/getPieceTypes',
+          type : 'GET',
+          success: function(res){
+            var option = $('<option>')
+            
+            var pieceObj = JSON.parse(res);
+            var piece = '';
+            
+            $.each(pieceObj,function(index, value){
+              piece = $(option).clone();
+              $(piece).val(value.Type);
+              $(piece).text(value.Type);
+              $('#typeSelectList').append(piece);
+            });
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
+      }),
+      $(function(){
+        $.ajax({
+          url : '/getLocations',
+          type : 'GET',
+          success: function(res){
+            var option = $('<option>')
+            
+            var locationObj = JSON.parse(res);
+            var location = '';
+            
+            $.each(locationObj,function(index, value){
+              location = $(option).clone();
+              $(location).val(value.Location);
+              $(location).text(value.Location);
+              $('#locationSelectList').append(location);
             });
           },
           error: function(error){
@@ -54,13 +100,13 @@
                         <a href="showExhibitPage">Exhibits</a>
                     </li>
                     <li>
-                        <a href="#pieces">Pieces</a>
+                        <a href="showPiecePage">Pieces</a>
                     </li>
                     <li>
                         <a href="#curators">Curators</a>
                     </li>
                     <li>
-                        <a href="#donors">Donors</a>
+                        <a href="showDonorPage">Donors</a>
                     </li>
                     <li>
                     	<a href="showSignUp">Sign up</a>
@@ -134,6 +180,36 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-3 col-md-offset-1">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span/> What pieces of a given type are in this exhibit?</div>
+                <form class="form-seePiecesOfGivenTypeFromExhibit" id="seePiecesOfGivenTypeFromExhibit">
+                  <label for="selectExhibit1">Select exhibit:</label>
+                  <select class="form-control" name="exhibitSelectList1" id="exhibitSelectList1"> </select>
+                  <label for="selectType">Select type:</label>
+                  <select class="form-control" name="typeSelectList" id="typeSelectList"> </select>
+                  <button type="button" id="submitButtonSeePiecesOfGivenTypeFromExhibit" class="btn btn-success btn-sm"> See all pieces of type in exhibit</button>
+                </form>
+                <ul class="list-group" id="piecesInExhibitByType">
+                </ul>
+            </div>
+          </div>
+
+        <div class="col-md-3 col-md-offset-2">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span/> What exhibits have ever been in this location?</div>
+                <form class="form-seeExhibitsInLocation" id="seeExhibitsInLocation">
+                  <label for="selectLocation">Select location:</label>
+                  <select class="form-control" name="locationSelectList" id="locationSelectList"> </select>
+                  <button type="button" id="submitButtonSeeExhibitsInLocation" class="btn btn-success btn-sm">See all exhibits that have been here</button>
+                </form>
+                <ul class="list-group" id="exhibitsInLocation">
+                </ul>
+            </div>
+          </div>
           
       </div> 
 
