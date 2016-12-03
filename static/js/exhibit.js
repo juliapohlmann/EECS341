@@ -5,6 +5,7 @@ $(function(){
 			url: '/showAllExhibits',
 			type: 'GET',
 			success: function(res){
+				$('#allExhibits').empty();
 				console.log(res);
 	            var listItem = $('<li>');
             
@@ -32,6 +33,8 @@ $(function(){
 			url: '/getActiveExhibits',
 			type: 'GET',
 			success: function(res){
+				$('#currentExhibits').empty();
+
 				console.log(res);
 	            var listItem = $('<li>');
             
@@ -45,7 +48,6 @@ $(function(){
 	              $(exhibit).text(value.Name + ' (' + value.Location + ')');
 	              // $(exhibit).text(value.Location);
 	              $('#currentExhibits').append(exhibit);
-	              exhibit = '';
 	          	});
 			},
 			error: function(error){
@@ -53,17 +55,51 @@ $(function(){
 			}
 		});
 	}),
-	$('#submitButtonSeePiecesFromExhibit').click(function(){
+	$('#submitGetExhibitsByTimeFrame').unbind("click").click(function(){
+		console.log("Finding exhibits by date working so far");
+		$.ajax({
+			url: '/getExhibitsByTimeFrame',
+			type: 'POST',
+			data: $('form').serialize(),
+			success: function(res){
+				$('#exhibitsByTimeFrame').empty();
+
+				console.log(res);
+	            var listItem = $('<li>');
+            
+	            var exhibitObj = JSON.parse(res);
+	            var exhibit = '';
+	            
+	            $.each(exhibitObj,function(index, value){
+	              exhibit = $(listItem).clone();
+	              $(exhibit).addClass('list-group-item');
+	              $(exhibit).val(value.Name + ' (' + value.Location + ')');
+	              $(exhibit).text(value.Name + ' (' + value.Location + ')');
+	              // $(exhibit).text(value.Location);
+	              $('#exhibitsByTimeFrame').append(exhibit);
+	          	});
+	          	console.log('done');
+			},
+			error: function(error){
+				console.log(JSON.stringify(error));
+			}
+		});
+	}),
+	$('#submitButtonSeePiecesFromExhibit').unbind("click").click(function(){
 		console.log("Showing all pieces in exhibit so far");
 		$.ajax({
 			url: '/getPiecesFromExhibit',
-			type: 'GET',
-			data: $('form-seePiecesFromExhibit').serialize(),
+			type: 'POST',
+			data: $('form').serialize(),
 			success: function(res){
+				$('#piecesInExhibit').empty();
+
 				console.log(res);
 	            var listItem = $('<li>');
             
 	            var pieceObj = JSON.parse(res);
+	            console.log(pieceObj);
+
 	            var piece = '';
 	            
 	            $.each(pieceObj,function(index, value){
@@ -72,8 +108,8 @@ $(function(){
 	              $(piece).val(value.Name + ' (' + value.Artist + ')');
 	              $(piece).text(value.Name + ' (' + value.Artist + ')');
 	              // $(exhibit).text(value.Location);
+	              console.log('index: ' + index + ' piece: ' + value.Name)
 	              $('#piecesInExhibit').append(piece);
-	              piece = '';
 	          	});
 			},
 			error: function(error){

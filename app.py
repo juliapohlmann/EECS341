@@ -43,15 +43,48 @@ def logout():
     session.pop('user',None)
     return redirect('/')
     
+@app.route('/getExhibitsByTimeFrame', methods=['POST'])
+def getExhibitsByTimeFrame():
+	try:
+    	# return json.dumps({'message':'here'})
 
-@app.route('/getPiecesFromExhibit')
+		_startDate = request.form['inputExhibitStartDate']
+		_endDate = request.form['inputExhibitEndDate']    	
+		# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getexhibitsbytimeframe',(_startDate,_endDate))
+		exhibits = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+
+		exhibits_dict = []
+		for exhibit in exhibits:
+			exhibit_dict = {
+					'Id': exhibit[0],
+					'Name': exhibit[1],
+					'Location': exhibit[2],
+					'Start Date': exhibit[3],
+					'End Date': exhibit[4]}
+			exhibits_dict.append(exhibit_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+		return json.dumps(exhibits_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+
+
+@app.route('/getPiecesFromExhibit', methods=['POST'])
 def getPiecesFromExhibit():
     try:
-    	_exhibit = request.form['exhibitSelectList']
+    	# return json.dumps({'message':'here'})
+
+    	_exhibit = request.form.get('exhibitSelectList')
+    	# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
+
         con = mysql.connect()
         cursor = con.cursor()
-        cursor.callproc('getpiecesfromexhibit',(_exhibit))
+        cursor.callproc('getpiecesfromexhibit',(_exhibit,))
         pieces = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
 
         pieces_dict = []
         for piece in pieces:
@@ -63,7 +96,7 @@ def getPiecesFromExhibit():
             # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
-    	return json.dumps({'error':str(ex)})
+    	return json.dumps({'error1':str(ex)})
 
 @app.route('/addPieceToExhibit', methods=['POST'])
 def addPieceToExhibit():
@@ -333,7 +366,7 @@ def signIn():
 
 if __name__ == "__main__":
 	app.debug = True
-	# threaded=True, 
+	threaded=True, 
 	app.run(port=5000)
 	# http_server = WSGIServer(('', 5000), app)
 	# http_server.serve_forever()
