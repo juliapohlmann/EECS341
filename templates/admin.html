@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<head>
+    <title>Admin</title>
+     
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/signup.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container" id="home">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">CMA Explorer</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-3 col-md-offset-1">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <span/> Add new exhibit</div>
+              <form class="form-signin">
+                <label for="inputExhibitName" class="sr-only">Name</label>
+                <input type="name" name="inputExhibitName" id="inputExhibitName" class="form-control" placeholder="Name" required autofocus>
+                <label for="inputExhibitStartDate" class="sr-only">Start Date</label>
+                <input type="startDate" name="inputExhibitStartDate" id="inputExhibitStartDate" class="form-control" placeholder="Start Date" required autofocus>
+                <label for="inputExhibitEndDate" class="sr-only">End Date</label>
+                <input type="endDate" name="inputExhibitEndDate" id="inputExhibitEndDate" class="form-control" placeholder="End Date" required>
+                <label for="inputLocation" class="sr-only">Location</label>
+                <input type="location" name="inputLocation" id="inputLocation" class="form-control" placeholder="Location" required>
+                <button type="submit" id="submitButtonCreateNewExhibit" class="btn btn-success btn-sm"> Create new exhibit</button>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-md-offset-2">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span/> Add new piece</div>
+                <form class="form-signin">
+                  <label for="inputPieceType" class="sr-only">Piece Type</label>
+                  <input type="pieceType" name="inputPieceType" id="inputPieceType" class="form-control" placeholder="Type" required>
+                  <label for="inputArtist" class="sr-only">Artist</label>
+                  <input type="artist" name="inputArtist" id="inputArtist" class="form-control" placeholder="Artist" required>
+                  <label for="inputDateCreated" class="sr-only">Date Created</label>
+                  <input type="dateCreated" name="inputDateCreated" id="inputDateCreated" class="form-control" placeholder="Date Created" required>
+                  <label for="inputDesc" class="sr-only">Description</label>
+                  <input type="desc" name="inputDesc" id="inputDesc" class="form-control" placeholder="Description" required>
+                  <button type="submit" id="submitButtonCreateNewPiece" class="btn btn-success btn-sm"> Create new piece</button>
+                </form>
+            </div>
+          </div>
+
+          <div class="col-md-3 col-md-offset-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span/> Add new curator</div>
+                <form class="form-signin">
+                  <label for="inputCuratorName" class="sr-only">Name</label>
+                  <input type="name" name="inputCuratorName" id="inputCuratorName" class="form-control" placeholder="Name" required autofocus>
+                  <label for="inputExpertise" class="sr-only">Expertise</label>
+                  <input type="expertise" name="inputExpertise" id="inputExpertise" class="form-control" placeholder="Expertise" required>
+                  <label for="inputCuratorStartDate" class="sr-only">Start Date</label>
+                  <input type="startDate" name="inputCuratorStartDate" id="inputCuratorStartDate" class="form-control" placeholder="Start Date" required>
+                  <label for="inputCuratorEndDate" class="sr-only">End Date</label>
+                  <input type="endDate" name="inputCuratorEndDate" id="inputCuratorEndDate" class="form-control" placeholder="End Date" required>
+                  <button type="submit" id="submitButtonAddNewCurator" class="btn btn-success btn-sm"> Create new curator</button>
+                </form>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </body>
+
+  <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</html>
