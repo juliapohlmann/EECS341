@@ -4,7 +4,55 @@
      
     <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/signup.css') }}" rel="stylesheet">
-
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+    <script>
+      $(function(){
+        $.ajax({
+          url : '/getAvailablePieces',
+          type : 'GET',
+          success: function(res){
+            var option = $('<option>')
+            
+            var pieceObj = JSON.parse(res);
+            var piece = '';
+            
+            $.each(pieceObj,function(index, value){
+              piece = $(option).clone();
+              $(piece).val(value.Id);
+              $(piece).text(value.Name + ' (' + value.Artist + ')');
+              $('#pieceSelectList').append(piece);
+            });
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
+      }),
+      $(function(){
+        $.ajax({
+          url : '/getActiveExhibits',
+          type : 'GET',
+          success: function(res){
+            var option = $('<option>')
+            
+            var exhibitObj = JSON.parse(res);
+            var exhibit = '';
+            
+            $.each(exhibitObj,function(index, value){
+              exhibit = $(option).clone();
+              $(exhibit).val(value.Id);
+              $(exhibit).text(value.Name);
+              $('#exhibitSelectList').append(exhibit);
+            });
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
+      });
+    </script>
 </head>
 
 <body>
@@ -25,11 +73,11 @@
     <div class="container">
       <div class="row">
 
-        <div class="col-md-3 col-md-offset-1">
+        <div class="col-md-3">
           <div class="panel panel-default">
             <div class="panel-heading">
               <span/> Add new exhibit</div>
-              <form class="form-signin">
+              <form class="form-addNewExhibit">
                 <label for="inputExhibitName" class="sr-only">Name</label>
                 <input type="name" name="inputExhibitName" id="inputExhibitName" class="form-control" placeholder="Name" required autofocus>
                 <label for="inputExhibitStartDate" class="sr-only">Start Date</label>
@@ -43,11 +91,13 @@
             </div>
           </div>
 
-          <div class="col-md-3 col-md-offset-2">
+          <div class="col-md-3 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <span/> Add new piece</div>
-                <form class="form-signin">
+                <form class="form-addNewPiece">
+                  <label for="inputPieceName" class="sr-only">Piece Name</label>
+                  <input type="name" name="inputPieceName" id="inputPieceName" class="form-control" placeholder="Name" required>
                   <label for="inputPieceType" class="sr-only">Piece Type</label>
                   <input type="pieceType" name="inputPieceType" id="inputPieceType" class="form-control" placeholder="Type" required>
                   <label for="inputArtist" class="sr-only">Artist</label>
@@ -61,11 +111,11 @@
             </div>
           </div>
 
-          <div class="col-md-3 col-md-offset-3">
+          <div class="col-md-3 col-md-offset-2">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <span/> Add new curator</div>
-                <form class="form-signin">
+                <form class="form-addNewCurator">
                   <label for="inputCuratorName" class="sr-only">Name</label>
                   <input type="name" name="inputCuratorName" id="inputCuratorName" class="form-control" placeholder="Name" required autofocus>
                   <label for="inputExpertise" class="sr-only">Expertise</label>
@@ -78,13 +128,26 @@
                 </form>
             </div>
           </div>
+        </div>
+      <div class="row">
+
+          <div class="col-md-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span/> Add unassigned piece to exhibit</div>
+                <form class="form-addPieceToExhibit" id="addPieceToExhibit">
+                  <label for="selectPiece">Select piece:</label>
+                  <select class="form-control" name="pieceSelectList" id="pieceSelectList"> </select>
+                  <label for="selectExhibit">Select exhibit:</label>
+                  <select class="form-control" name="exhibitSelectList" id="exhibitSelectList"> </select>
+                  <button type="submit" id="submitButtonAddPieceToExhibit" class="btn btn-success btn-sm"> Add piece to exhibit</button>
+                </form>
+            </div>
+          </div>
+
+          
 
       </div>
     </div>
   </body>
-
-  <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
-
 </html>

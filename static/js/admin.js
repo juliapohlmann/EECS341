@@ -25,16 +25,33 @@ $(function(){
 				console.log(response);
 			},
 			error: function(error){
-				console.log(JSON.stringify(error));
+				console.log(error)
+				// console.log(JSON.stringify(error));
 			}
 		});
 	});
 }),
 $(function(){
 	$('#submitButtonAddNewCurator').click(function(){
-		console.log("Adding curator is working so far");
+		console.log("Creating curating is working so far");
 		$.ajax({
 			url: '/addCurator',
+			data: $('form').serialize(),
+			type: 'POST',
+			success: function(response){
+				console.log(response);
+			},
+			error: function(error){
+				console.log(JSON.stringify(error));
+			}
+		});
+	});
+}),
+$(function(){
+	$('#submitButtonAddPieceToExhibit').click(function(){
+		console.log("Adding piece to exhibit is working so far");
+		$.ajax({
+			url: '/addPieceToExhibit',
 			data: $('form').serialize(),
 			type: 'POST',
 			success: function(response){

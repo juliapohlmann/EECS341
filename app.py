@@ -18,6 +18,10 @@ mysql.init_app(app)
 def main():
     return render_template('index.html')
 
+@app.route("/showHome")
+def showHome():
+    return render_template('index.html')
+
 @app.route('/showSignUp')
 def showSignUp():
     return render_template('signup.html')
@@ -25,6 +29,10 @@ def showSignUp():
 @app.route('/showSignIn')
 def showSignIn():
     return render_template('signin.html')
+
+@app.route('/showExhibitPage')
+def showExhibitPage():
+    return render_template('exhibit.html')
 
 @app.route('/showAdmin')
 def showAdmin():
@@ -35,66 +43,169 @@ def logout():
     session.pop('user',None)
     return redirect('/')
 
+@app.route('/addPieceToExhibit', methods=['POST'])
+def addPieceToExhibit():
+	if session.get('user'):
+		_piece = request.form['pieceSelectList']
+		_exhibit = request.form.get('exhibitSelectList')
+		# _piece = request.form['pieceSelectList']
+		# _exhibit = request.form['exhibitSelectList']
+		# return json.dumps({'message':'Piece: ' + str(_piece)})
+
+		try:
+			connection = mysql.connect()
+			cursor = connection.cursor()
+			cursor.callproc('addpiecetoexhibit',(_piece, _exhibit))
+			returned_data = cursor.fetchall()
+
+			if len(returned_data) == 0:
+				connection.commit()
+				return json.dumps({'message':'Success in adding piece to exhibit'})
+			else:
+				return json.dumps({'error':str(returned_data)})
+		except Exception as ex:
+			return json.dumps({'error':str(ex)})
+	else:
+		return json.dumps({'error':'Unauthorized access, please log in'})
+
+@app.route('/showAllExhibits')
+def showAllExhibits():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getallexhibits',())
+        exhibits = cursor.fetchall()
+
+        exhibits_dict = []
+        for exhibit in exhibits:
+            exhibit_dict = {
+                    'Name': exhibit[0],
+                    'Location': exhibit[1]}
+            exhibits_dict.append(exhibit_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(exhibits_dict)
+        
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+
+@app.route('/getAvailablePieces')
+def getAvailablePieces():
+    try:
+        if session.get('user'):
+
+            con = mysql.connect()
+            cursor = con.cursor()
+            cursor.callproc('getavailablepieces',())
+            pieces = cursor.fetchall()
+
+            pieces_dict = []
+            for piece in pieces:
+                piece_dict = {
+                        'Id': piece[0],
+                        'Name': piece[1],
+                        'Artist': piece[2]}
+                pieces_dict.append(piece_dict)
+                # return json.dumps({'yay':str(exhibits_dict)})
+            return json.dumps(pieces_dict)
+        else:
+			return json.dumps({'error':'Unauthorized access, please log in'})
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+@app.route('/getActiveExhibits')
+def getActiveExhibits():
+    try:
+        if session.get('user'):
+
+            con = mysql.connect()
+            cursor = con.cursor()
+            cursor.callproc('getActiveExhibits',())
+            exhibits = cursor.fetchall()
+
+            exhibits_dict = []
+            for exhibit in exhibits:
+                exhibit_dict = {
+                        'Id': exhibit[0],
+                        'Name': exhibit[1]}
+                exhibits_dict.append(exhibit_dict)
+                # return json.dumps({'yay':str(exhibits_dict)})
+            return json.dumps(exhibits_dict)
+        else:
+			return json.dumps({'error':'Unauthorized access, please log in'})
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
 @app.route('/addCurator', methods=['POST'])
 def addCurator():
-	_name = request.form['inputCuratorName']
-	_expertise = request.form['inputExpertise']
-	_startDate = request.form['inputCuratorStartDate']
-	_endDate = request.form['inputCuratorEndDate']
+	if session.get('user'):
+		_name = request.form['inputCuratorName']
+		_expertise = request.form['inputExpertise']
+		_startDate = request.form['inputCuratorStartDate']
+		_endDate = request.form['inputCuratorEndDate']
 	
-	try:
-		connection = mysql.connect()
-		cursor = connection.cursor()
-		cursor.callproc('addcurator',(_name, _expertise, _startDate, _endDate))
-		returned_data = cursor.fetchall()
+		try:
+			connection = mysql.connect()
+			cursor = connection.cursor()
+			cursor.callproc('addcurator',(_name, _expertise, _startDate, _endDate))
+			returned_data = cursor.fetchall()
 
-		if len(returned_data) == 0:
-			connection.commit()
-			return json.dumps({'message':'Success in adding new curator'})
-		else:
-			return json.dumps({'error':str(returned_data)})
-	except Exception as ex:
-		return json.dumps({'error':str(ex)})
+			if len(returned_data) == 0:
+				connection.commit()
+				return json.dumps({'message':'Success in adding new curator'})
+			else:
+				return json.dumps({'error':str(returned_data)})
+		except Exception as ex:
+			return json.dumps({'error':str(ex)})
+	else:
+		return json.dumps({'error':'Unauthorized access, please log in'})
 
 @app.route('/addPiece', methods=['POST'])
 def addPiece():
-	_pieceType = request.form['inputPieceType']
-	_artist = request.form['inputArtist']
-	_dateCreated = request.form['inputDateCreated']
-	_desc = request.form['inputDesc']
-	try:
-		connection = mysql.connect()
-		cursor = connection.cursor()
-		cursor.callproc('addpiece',(_pieceType, _artist, _dateCreated, _desc))
-		returned_data = cursor.fetchall()
+	if session.get('user'):
+		_pieceType = request.form['inputPieceType']
+		_artist = request.form['inputArtist']
+		_dateCreated = request.form['inputDateCreated']
+		_desc = request.form['inputDesc']
+		_name = request.form['inputPieceName']
+		try:
+			connection = mysql.connect()
+			cursor = connection.cursor()
+			cursor.callproc('addpiece',(_pieceType, _artist, _dateCreated, _desc, _name))
+			returned_data = cursor.fetchall()
 
-		if len(returned_data) == 0:
-			connection.commit()
-			return json.dumps({'message':'Success in creating new piece'})
-		else:
-			return json.dumps({'error':str(returned_data)})
-	except Exception as ex:
-		return json.dumps({'error':str(ex)})
+			if len(returned_data) == 0:
+				connection.commit()
+				return json.dumps({'message':'Success in creating new piece'})
+			else:
+				return json.dumps({'error':str(returned_data)})
+		except Exception as ex:
+			return json.dumps({'error':str(ex)})
+	else:
+		return json.dumps({'error':'Unauthorized access, please log in'})
 
 @app.route('/addExhibit', methods=['POST'])
 def addExhibit():
-	_exhibitStartDate = request.form['inputExhibitStartDate']
-	_exhibitEndDate = request.form['inputExhibitEndDate']
-	_location = request.form['inputLocation']
-	_name = request.form['inputExhibitName']
-	try:
-		connection = mysql.connect()
-		cursor = connection.cursor()
-		cursor.callproc('addexhibit',(_exhibitStartDate, _exhibitEndDate, _location, _name))
-		returned_data = cursor.fetchall()
+	if session.get('user'):
+		_exhibitStartDate = request.form['inputExhibitStartDate']
+		_exhibitEndDate = request.form['inputExhibitEndDate']
+		_location = request.form['inputLocation']
+		_name = request.form['inputExhibitName']
+		try:
+			connection = mysql.connect()
+			cursor = connection.cursor()
+			cursor.callproc('addexhibit',(_exhibitStartDate, _exhibitEndDate, _location, _name))
+			returned_data = cursor.fetchall()
 
-		if len(returned_data) == 0:
-			connection.commit()
-			return json.dumps({'message':'Success in creating new exhibit'})
-		else:
-			return json.dumps({'error':str(returned_data)})
-	except Exception as ex:
-		return json.dumps({'error':str(ex)})
+			if len(returned_data) == 0:
+				connection.commit()
+				return json.dumps({'message':'Success in creating new exhibit'})
+			else:
+				return json.dumps({'error':str(returned_data)})
+		except Exception as ex:
+			return json.dumps({'error':str(ex)})
+	else:
+		return json.dumps({'error':'Unauthorized access'})
 
 @app.route('/signUp', methods=['POST'])
 def signUp():
