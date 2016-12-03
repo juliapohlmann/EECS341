@@ -38,6 +38,10 @@ def showExhibitPage():
 def showDonorPage():
     return render_template('donor.html')
 
+@app.route('/showCuratorPage')
+def showCuratorPage():
+    return render_template('curator.html')
+
 @app.route('/showAdmin')
 def showAdmin():
     return render_template('admin.html')
@@ -50,6 +54,116 @@ def showPiecePage():
 def logout():
     session.pop('user',None)
     return redirect('/')
+
+@app.route('/getCuratorsByExpertise', methods=['POST'])
+def getCuratorsByExpertise():
+	try:
+    	# return json.dumps({'message':'here'})
+
+		_expertise = request.form['expertiseSelectList']
+		# return json.dumps({'message': _piece})
+
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getcuratorsbyexpertise',(_expertise,))
+		curators = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+		# return json.dumps({'message': pieces})
+
+		curators_dict = []
+		for curator in curators:
+			curator_dict = {
+					'Name': curator[0]}
+			curators_dict.append(curator_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+		return json.dumps(curators_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+
+@app.route('/showAllExpertises')
+def showAllExpertises():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getallexpertises',())
+        expertises = cursor.fetchall()
+
+        expertises_dict = []
+        for expertise in expertises:
+            expertise_dict = {
+                    'Expertise': expertise[0]}
+            expertises_dict.append(expertise_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(expertises_dict)
+        
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+@app.route('/getCuratorsByDate', methods=['POST'])
+def getCuratorsByDate():
+	try:
+    	# return json.dumps({'message':'here'})
+
+		_date = request.form['inputStartDate']
+		# return json.dumps({'message': _piece})
+
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getcuratorsactiveondate',(_date,))
+		curators = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+		# return json.dumps({'message': pieces})
+
+		curators_dict = []
+		for curator in curators:
+			curator_dict = {
+					'Name': curator[0],
+					'Expertise': curator[1]}
+			curators_dict.append(curator_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+		return json.dumps(curators_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+
+@app.route('/showCurrentCurators')
+def showAllCurrentCurators():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getallcurrentcurators',())
+        curators = cursor.fetchall()
+
+        curators_dict = []
+        for curator in curators:
+            curator_dict = {
+                    'Name': curator[0],
+                    'Expertise': curator[1]}
+            curators_dict.append(curator_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(curators_dict)
+        
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
+
+@app.route('/showAllCurators')
+def showAllCurators():
+    try:
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getallcurators',())
+        curators = cursor.fetchall()
+
+        curators_dict = []
+        for curator in curators:
+            curator_dict = {
+                    'Name': curator[0],
+                    'Expertise': curator[1]}
+            curators_dict.append(curator_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(curators_dict)
+        
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
 
 @app.route('/getDonationsByDate', methods=['POST'])
 def getDonationsByDate():

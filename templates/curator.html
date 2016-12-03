@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>CMA Explorer</title>
+
+    <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/signup.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/curator.js') }}"></script>
+    <script>
+      $(function(){
+        $.ajax({
+          url : '/showAllExpertises',
+          type : 'GET',
+          success: function(res){
+            var option = $('<option>');
+
+            var expertiseObj = JSON.parse(res);
+            var expertise = '';
+            
+            $.each(expertiseObj,function(index, value){
+              expertise = $(option).clone();
+              $(expertise).val(value.Expertise);
+              $(expertise).text(value.Expertise);
+              $('#expertiseSelectList').append(expertise);
+            });
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
+      });
+    </script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container" id="home">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="showHome">CMA Explorer</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="showExhibitPage">Exhibits</a>
+                    </li>
+                    <li>
+                        <a href="showPiecePage">Pieces</a>
+                    </li>
+                    <li>
+                        <a href="showCuratorPage">Curators</a>
+                    </li>
+                    <li>
+                        <a href="showDonorPage">Donors</a>
+                    </li>
+                    <li>
+                    	<a href="showSignUp">Sign up</a>
+                    </li>
+                    <li>
+                    	<a href="showSignIn">Sign in</a>
+                    </li>
+                    <li>
+                    	<a href="/logout">Logout</a>
+                    </li>
+                    <li>
+                    	<a href="/showAdmin">Admin</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-3">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span/>Who all are/were curators?</div>
+                  <button type="button" id="showAllCurators" class="btn btn-success btn-sm">Show all curators</button>
+                  <ul class="list-group" id="allCurators">
+                  </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-md-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span/>What curators are currently working at CMA?</div>
+                  <button type="submit" id="showCurrentCurators" class="btn btn-success btn-sm">Show all active curators</button>
+                  <ul class="list-group" id="allCurrentCurators">
+                  </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-md-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span/> What curators were active on this date?</div>
+                  <form class="form-seeCuratorsActiveOnGivenDate" id="seeCuratorsActiveOnGivenDate">
+                    <label for="inputStartDate" class="sr-only">Date</label>
+                    <input type="startDate" name="inputStartDate" id="inputStartDate" class="form-control" placeholder="Date" required>
+                    <button type="button" id="submitGetCuratorsByDate" class="btn btn-success btn-sm"> See curators at given date</button>
+                  </form>
+                  <ul class="list-group" id="curatorsByDate">
+                  </ul>
+              </div>
+            </div>
+
+        <div class="row">
+          <div class="col-md-3">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <form class="form-seeCuratorsByExpertise" id="seeCuratorsByExpertise">
+                    <span/>What curators have this expertise?</div>
+                    <label for="selectExpertise">Select expertise:</label>
+                    <select class="form-control" name="expertiseSelectList" id="expertiseSelectList"> </select>
+                    <button type="button" id="getCuratorsOfExpertise" class="btn btn-success btn-sm">Show curators with this expertise</button>
+                  </form>
+                  <ul class="list-group" id="curatorsByExpertise">
+                  </ul>
+                </div>
+            </div>
+          
+      </div> 
+      <div class="row">
+      </div>
+
+    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/exhibit.js') }}"></script>
+
+</body>
+
+</html>
