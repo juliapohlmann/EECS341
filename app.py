@@ -543,7 +543,7 @@ def getPiecesFromExhibit():
     try:
     	# return json.dumps({'message':'here'})
 
-    	_exhibit = request.form.get('exhibitSelectList')
+    	_exhibit = request.form.get('exhibitSelectList2')
     	# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
 
         con = mysql.connect()

@@ -20,6 +20,7 @@
           url : '/getActiveExhibits',
           type : 'GET',
           success: function(res){
+            console.log('Getting active exhibits');
             var option = $('<option>')
             
             var exhibitObj = JSON.parse(res);
@@ -29,9 +30,11 @@
               exhibit = $(option).clone();
               $(exhibit).val(value.Id);
               $(exhibit).text(value.Name);
-              $('#exhibitSelectList').append(exhibit);
+              $('#exhibitSelectList2').append(exhibit);
+              exhibit = $(option).clone();
+              $(exhibit).val(value.Id);
+              $(exhibit).text(value.Name);
               $('#exhibitSelectList1').append(exhibit);
-
             });
           },
           error: function(error){
@@ -153,8 +156,8 @@
               <div class="panel-heading">
                 <span/> What pieces are in this exhibit?</div>
                 <form class="form-seePiecesFromExhibit" id="seePiecesFromExhibit">
-                  <label for="selectExhibit">Select exhibit:</label>
-                  <select class="form-control" name="exhibitSelectList" id="exhibitSelectList"> </select>
+                  <label for="selectExhibit2">Select exhibit:</label>
+                  <select class="form-control" name="exhibitSelectList2" id="exhibitSelectList2"> </select>
                   <button type="button" id="submitButtonSeePiecesFromExhibit" class="btn btn-success btn-sm"> See all pieces in exhibit</button>
                 </form>
                 <ul class="list-group" id="piecesInExhibit">
