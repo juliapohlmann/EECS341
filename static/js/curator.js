@@ -106,5 +106,33 @@ $(function(){
 				console.log(JSON.stringify(error));
 			}
 		});
+	}),
+	$('#getCuratorsOfExhibit').unbind("click").click(function(){
+		console.log("Finding curators by exhibit working so far");
+		$.ajax({
+			url: '/getCuratorsByExhibit',
+			type: 'POST',
+			data: $('form').serialize(),
+			success: function(res){
+				$('#curatorsByExhibit').empty();
+
+				console.log(res);
+	            var listItem = $('<li>');
+            
+	            var curatorObj = JSON.parse(res);
+	            var curator = '';
+	            
+	            $.each(curatorObj,function(index, value){
+	              curator = $(listItem).clone();
+	              $(curator).addClass('list-group-item');
+	              $(curator).val(value.Name);
+	              $(curator).text(value.Name);
+	              $('#curatorsByExhibit').append(curator);
+	          	});
+			},
+			error: function(error){
+				console.log(JSON.stringify(error));
+			}
+		});
 	});
 });

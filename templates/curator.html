@@ -36,6 +36,28 @@
             console.log(error);
           }
         });
+      }),
+      $(function(){
+        $.ajax({
+          url : '/showAllExhibits',
+          type : 'GET',
+          success: function(res){
+            var option = $('<option>');
+
+            var exhibitObj = JSON.parse(res);
+            var exhibit = '';
+            
+            $.each(exhibitObj,function(index, value){
+              exhibit = $(option).clone();
+              $(exhibit).val(value.Id);
+              $(exhibit).text(value.Name);
+              $('#exhibitSelectList').append(exhibit);
+            });
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
       });
     </script>
 
@@ -102,7 +124,7 @@
                 </div>
             </div>
 
-            <div class="col-md-3 col-md-offset-1">
+            <div class="col-md-3 col-md-offset-2">
               <div class="panel panel-default">
                 <div class="panel-heading">
                   <span/> What curators were active on this date?</div>
@@ -127,6 +149,19 @@
                     <button type="button" id="getCuratorsOfExpertise" class="btn btn-success btn-sm">Show curators with this expertise</button>
                   </form>
                   <ul class="list-group" id="curatorsByExpertise">
+                  </ul>
+                </div>
+            </div>
+            <div class="col-md-3 col-md-offset-1" >
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <form class="form-seeCuratorsByExhibit" id="seeCuratorsByExhibit">
+                    <span/>What curators have curated this exhibit?</div>
+                    <label for="selectExhibit">Select exhibit:</label>
+                    <select class="form-control" name="exhibitSelectList" id="exhibitSelectList"> </select>
+                    <button type="button" id="getCuratorsOfExhibit" class="btn btn-success btn-sm">Show curators of this exhibit</button>
+                  </form>
+                  <ul class="list-group" id="curatorsByExhibit">
                   </ul>
                 </div>
             </div>

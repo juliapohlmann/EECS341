@@ -55,6 +55,30 @@ def logout():
     session.pop('user',None)
     return redirect('/')
 
+@app.route('/getCuratorsByExhibit', methods=['POST'])
+def getCuratorsByExhibit():
+	try:
+    	# return json.dumps({'message':'here'})
+
+		_exhibit = request.form['exhibitSelectList']
+		# return json.dumps({'message': _piece})
+
+		con = mysql.connect()
+		cursor = con.cursor()
+		cursor.callproc('getcuratorsbyexhibit',(_exhibit,))
+		curators = cursor.fetchall()
+    	# return json.dumps({'message':'here'})
+		# return json.dumps({'message': pieces})
+
+		curators_dict = []
+		for curator in curators:
+			curator_dict = {
+					'Name': curator[0]}
+			curators_dict.append(curator_dict)
+		return json.dumps(curators_dict)
+	except Exception as ex:
+		return json.dumps({'error':str(ex)})
+
 @app.route('/getCuratorsByExpertise', methods=['POST'])
 def getCuratorsByExpertise():
 	try:
@@ -75,7 +99,6 @@ def getCuratorsByExpertise():
 			curator_dict = {
 					'Name': curator[0]}
 			curators_dict.append(curator_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
 		return json.dumps(curators_dict)
 	except Exception as ex:
 		return json.dumps({'error':str(ex)})
@@ -93,7 +116,6 @@ def showAllExpertises():
             expertise_dict = {
                     'Expertise': expertise[0]}
             expertises_dict.append(expertise_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(expertises_dict)
         
     except Exception as ex:
@@ -120,7 +142,6 @@ def getCuratorsByDate():
 					'Name': curator[0],
 					'Expertise': curator[1]}
 			curators_dict.append(curator_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
 		return json.dumps(curators_dict)
 	except Exception as ex:
 		return json.dumps({'error':str(ex)})
@@ -139,7 +160,6 @@ def showAllCurrentCurators():
                     'Name': curator[0],
                     'Expertise': curator[1]}
             curators_dict.append(curator_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(curators_dict)
         
     except Exception as ex:
@@ -159,7 +179,6 @@ def showAllCurators():
                     'Name': curator[0],
                     'Expertise': curator[1]}
             curators_dict.append(curator_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(curators_dict)
         
     except Exception as ex:
@@ -582,7 +601,8 @@ def showAllExhibits():
         for exhibit in exhibits:
             exhibit_dict = {
                     'Name': exhibit[0],
-                    'Location': exhibit[1]}
+                    'Location': exhibit[1], 
+                    'Id': exhibit[2]}
             exhibits_dict.append(exhibit_dict)
             # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(exhibits_dict)
