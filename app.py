@@ -253,8 +253,8 @@ def showAllDonors():
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
 
-@app.route('/getpiecelocation', methods=['POST'])
-def getpiecelocation():
+@app.route('/getPieceLocation', methods=['POST'])
+def getPieceLocation():
 	try:
     	# return json.dumps({'message':'here'})
 

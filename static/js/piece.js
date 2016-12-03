@@ -29,7 +29,7 @@ $(function(){
 	$('#getExhibitOfPiece').unbind("click").click(function(){
 		console.log("Showing exhibit of piece working so far");
 		$.ajax({
-			url: '/getpiecelocation',
+			url: '/getPieceLocation',
 			type: 'POST',
 			data: $('form').serialize(),
 			success: function(res){
@@ -39,11 +39,12 @@ $(function(){
             
 	            var pieceObj = JSON.parse(res);
 	            var piece = '';
+
 	            $.each(pieceObj,function(index, value){
 	              piece = $(listItem).clone();
 	              $(piece).addClass('list-group-item');
 	              $(piece).val(value.ExhibitName +  ' (' + value.ExhibitLocation + ')');
-	              $(piece).val(value.ExhibitName +  ' (' + value.ExhibitLocation + ')');
+	              $(piece).text(value.ExhibitName +  ' (' + value.ExhibitLocation + ')');
 	              $('#exhibitOfPiece').append(piece);
 	          	});
 			},
