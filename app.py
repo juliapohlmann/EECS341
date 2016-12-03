@@ -42,20 +42,42 @@ def showAdmin():
 def logout():
     session.pop('user',None)
     return redirect('/')
+    
+
+@app.route('/getPiecesFromExhibit')
+def getPiecesFromExhibit():
+    try:
+    	_exhibit = request.form['exhibitSelectList']
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getpiecesfromexhibit',(_exhibit))
+        pieces = cursor.fetchall()
+
+        pieces_dict = []
+        for piece in pieces:
+            piece_dict = {
+                    'Id': piece[0],
+                    'Name': piece[1],
+                    'Artist': piece[2]}
+            pieces_dict.append(piece_dict)
+            # return json.dumps({'yay':str(exhibits_dict)})
+        return json.dumps(pieces_dict)
+    except Exception as ex:
+    	return json.dumps({'error':str(ex)})
 
 @app.route('/addPieceToExhibit', methods=['POST'])
 def addPieceToExhibit():
 	if session.get('user'):
 		_piece = request.form['pieceSelectList']
-		_exhibit = request.form.get('exhibitSelectList')
+		_exhibit = request.form['exhibitSelectList']
 		# _piece = request.form['pieceSelectList']
 		# _exhibit = request.form['exhibitSelectList']
-		# return json.dumps({'message':'Piece: ' + str(_piece)})
+		# return json.dumps({'message':'Piece: ' + _piece})
 
 		try:
 			connection = mysql.connect()
 			cursor = connection.cursor()
-			cursor.callproc('addpiecetoexhibit',(_piece, _exhibit))
+			cursor.callproc('addpiecetoexhibit',(_exhibit, _piece))
 			returned_data = cursor.fetchall()
 
 			if len(returned_data) == 0:
@@ -127,7 +149,8 @@ def getActiveExhibits():
             for exhibit in exhibits:
                 exhibit_dict = {
                         'Id': exhibit[0],
-                        'Name': exhibit[1]}
+                        'Name': exhibit[1],
+                        'Location': exhibit[2]}
                 exhibits_dict.append(exhibit_dict)
                 # return json.dumps({'yay':str(exhibits_dict)})
             return json.dumps(exhibits_dict)

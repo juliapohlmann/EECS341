@@ -14,6 +14,30 @@
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/exhibit.js') }}"></script>
+    <script>
+      $(function(){
+        $.ajax({
+          url : '/getActiveExhibits',
+          type : 'GET',
+          success: function(res){
+            var option = $('<option>')
+            
+            var exhibitObj = JSON.parse(res);
+            var exhibit = '';
+            
+            $.each(exhibitObj,function(index, value){
+              exhibit = $(option).clone();
+              $(exhibit).val(value.Id);
+              $(exhibit).text(value.Name);
+              $('#exhibitSelectList').append(exhibit);
+            });
+          },
+          error: function(error){
+            console.log(error);
+          }
+        });
+      });
+    </script>
 
 </head>
 
@@ -68,7 +92,31 @@
                 </div>
             </div>
 
-          <div class="col-md-3 col-md-offset-1">
+            <div class="col-md-3 col-md-offset-1">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span/>What are all the current exhibits?</div>
+                  <button type="submit" id="showCurrentExhibits" class="btn btn-success btn-sm">Show current exhibits</button>
+                  <ul class="list-group" id="currentExhibits">
+                  </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-md-offset-2">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <span/>What pieces are in this exhibit?</div>
+                  <form class="form-seePiecesFromExhibit" id="seePiecesFromExhibit">
+                      <label for="selectExhibit">Select exhibit:</label>
+                      <select class="form-control" name="exhibitSelectList" id="exhibitSelectList"> </select>
+                      <button type="submit" id="submitButtonAddPieceToExhibit" class="btn btn-success btn-sm"> See pieces in selected exhibit</button>
+                  </form>
+                  <ul class="list-group" id="currentExhibits">
+                  </ul>
+                </div>
+            </div>
+
+          <!-- <div class="col-md-3 col-md-offset-1">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <span/> Add new piece</div>
@@ -86,9 +134,9 @@
                   <button type="submit" id="submitButtonCreateNewPiece" class="btn btn-success btn-sm"> Create new piece</button>
                 </form>
             </div>
-          </div>
+          </div> -->
 
-          <div class="col-md-3 col-md-offset-2">
+          <!-- <div class="col-md-3 col-md-offset-2">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <span/> Add new curator</div>
@@ -105,10 +153,10 @@
                 </form>
             </div>
           </div>
-        </div>
+        </div> -->
       <div class="row">
 
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <span/> Add unassigned piece to exhibit</div>
@@ -119,8 +167,8 @@
                   <select class="form-control" name="exhibitSelectList" id="exhibitSelectList"> </select>
                   <button type="submit" id="submitButtonAddPieceToExhibit" class="btn btn-success btn-sm"> Add piece to exhibit</button>
                 </form>
-            </div>
-          </div>
+            </div> -->
+          </div> 
 
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
