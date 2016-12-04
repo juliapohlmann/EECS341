@@ -724,6 +724,28 @@ def addCurator():
 	else:
 		return json.dumps({'error':'Unauthorized access, please log in'})
 
+@app.route('/addDonor', methods=['POST'])
+def addDonor():
+    if session.get('user'):
+        _name = request.form['inputDonorName']
+        _address = request.form['inputDonorAddress']
+    
+        try:
+            connection = mysql.connect()
+            cursor = connection.cursor()
+            cursor.callproc('adddonor',(_name, _address))
+            returned_data = cursor.fetchall()
+
+            if len(returned_data) == 0:
+                connection.commit()
+                return json.dumps({'message':'Success in adding new donor'})
+            else:
+                return json.dumps({'error':str(returned_data)})
+        except Exception as ex:
+            return json.dumps({'error':str(ex)})
+    else:
+        return json.dumps({'error':'Unauthorized access, please log in'})
+
 @app.route('/addPiece', methods=['POST'])
 def addPiece():
 	if session.get('user'):

@@ -57,7 +57,6 @@
           url: '/showAllDonors',
           type: 'GET',
           success: function(res){
-            console.log(res);
             var option = $('<option>')
 
             var donorObj = JSON.parse(res);
@@ -215,6 +214,22 @@
             </div>
           </div>
         </div>
+
+        <div class="col-md-3 col-md-offset-2">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span/> Add new donor</div>
+                <form class="form-addNewDonor">
+                  <label for="inputDonorName" class="sr-only">Name</label>
+                  <input type="name" name="inputDonorName" id="inputDonorName" class="form-control" placeholder="Name" required autofocus>
+                  <label for="inputDonorAddress" class="sr-only">Address</label>
+                  <input type="address" name="inputDonorAddress" id="inputDonorAddress" class="form-control" placeholder="Address" required>
+                  <button type="submit" id="submitButtonAddNewDonor" class="btn btn-success btn-sm"> Add new donor</button>
+                </form>
+            </div>
+          </div>
+        </div>
+
 
           
 

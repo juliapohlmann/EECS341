@@ -48,6 +48,22 @@ $(function(){
 	});
 }),
 $(function(){
+	$('#submitButtonAddNewDonor').click(function(){
+		console.log("Creating donor is working so far");
+		$.ajax({
+			url: '/addDonor',
+			data: $('form').serialize(),
+			type: 'POST',
+			success: function(response){
+				console.log(response);
+			},
+			error: function(error){
+				console.log(JSON.stringify(error));
+			}
+		});
+	});
+}),
+$(function(){
 	$('#submitButtonLogNewDonation').click(function(){
 		console.log("Logging donation is working so far");
 		$.ajax({
