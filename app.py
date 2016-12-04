@@ -674,6 +674,32 @@ def getActiveExhibits():
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
 
+@app.route('/logDonation', methods=['POST'])
+def logDonation():
+    if session.get('user'):
+        _donor = request.form.get('donorSelectList')
+        _notes = request.form['inputNotes']
+        _pieceType = request.form['inputDonorPieceType']
+        _artist = request.form['inputDonorArtist']
+        _dateCreated = request.form['inputDonorDateCreated']
+        _desc = request.form['inputDonorDesc']
+        _name = request.form['inputDonorPieceName']
+        try:
+            connection = mysql.connect()
+            cursor = connection.cursor()
+            cursor.callproc('addDonation',(_donor, _notes, _pieceType, _artist, _dateCreated, _desc, _name))
+            returned_data = cursor.fetchall()
+
+            if len(returned_data) == 0:
+                connection.commit()
+                return json.dumps({'message':'Success in creating new piece'})
+            else:
+                return json.dumps({'error':str(returned_data)})
+        except Exception as ex:
+            return json.dumps({'error':str(ex)})
+    else:
+        return json.dumps({'error':'Unauthorized access, please log in'})
+
 @app.route('/addCurator', methods=['POST'])
 def addCurator():
 	if session.get('user'):
@@ -786,26 +812,11 @@ def signIn():
 		returned_array = cursor.fetchall()
 		data = returned_array[0]
 
-		# return json.dumps({'got here':str(data)})
 
 		if len(data) == 3:
-			# return json.dumps({'got here': 'aalskdjfklajs'})
 			if check_password_hash(str(data[2]), _password):
 				session['user'] = data[0]
-				# return json.dumps({'got here': 'aalskdjfklajs'})
 				return json.dumps({'good':'logged in!'})
-				# return render_template('index.html')
-				# target = '/'
-				# return redirect(url_for(target))
-				# console.log("abcdefgh")
-				# return redirect(url_for('answer_page.html'))
-				# return render_template('index.html')
-				# redirect(url_for('index.html'))
-				# main()
-				# redirect('index.html')
-				# render_template('signin.html')
-				# return redirect('/showSignUp')
-				# return json.dumps({'message':'All good'})
 			else:
 				return json.dumps({'error1':'Wrong password or user name'})
 		else:
@@ -815,36 +826,6 @@ def signIn():
 	finally:
 		cursor.close()
 		connection.close()
-
-
-    # except Exception as e:
-    #     return render_template('error.html',error = str(e))
-    # finally:
-    #     cursor.close()
-    #     connection.close()
-	# _username = request.form['inputUsername']
-	# _password = request.form['inputPassword']
-	# try:
-	# 	if _username and _password:
-	# 		connection = mysql.connect()
-	# 		cursor = connection.cursor()
-	# 		cursor.callproc('signin',(_username))
-	# 		returned_data = cursor.fetchall()
-
-	# 		if len(returned_data) > 0:
-	# 			if check_password_hash(str(data[0][3]), _password):
-	# 				session['user'] = data[0][0]
-	# 				return json.dumps({'message':'Success in creating user'})
-	# 				# return redirect('/')
-	# 			else:
-	# 				return json.dumps({'html':'<span>Wrong username or password</span>'})
-	# 		else:
-	# 			return json.dumps({'html':'<span>Wrong username or password</span>'})
-	# except Exception as ex:
-	# 	return json.dumps({'error':str(ex)})
-	# finally:
-	# 	cursor.close()
-	# 	connection.close()
 
 if __name__ == "__main__":
 	app.debug = True

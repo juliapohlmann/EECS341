@@ -51,6 +51,30 @@
             console.log(error);
           }
         });
+      }),
+      $(function(){
+        $.ajax({
+          url: '/showAllDonors',
+          type: 'GET',
+          success: function(res){
+            console.log(res);
+            var option = $('<option>')
+
+            var donorObj = JSON.parse(res);
+            var donor = '';
+            
+            $.each(donorObj,function(index, value){
+              donor = $(option).clone();
+              $(donor).val(value.Id);
+              $(donor).text(value.Name);
+              // $(exhibit).text(value.Location);
+              $('#donorSelectList').append(donor);
+            });
+          },
+          error: function(error){
+            console.log(JSON.stringify(error));
+          }
+        });
       });
     </script>
 </head>
@@ -165,6 +189,32 @@
                 </form>
             </div>
           </div>
+
+          <div class="col-md-3 col-md-offset-1">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span/> Log donation</div>
+                <form class="form-logDonation">
+                  <label for="donorPiece">Select donor:</label>
+                  <select class="form-control" name="donorSelectList" id="donorSelectList"> </select>
+                  <label for="inputNotes" class="sr-only">Donation notes</label>
+                  <input type="notes" name="inputNotes" id="inputNotes" class="form-control" placeholder="Notes" required>
+                  <span> Donation piece information: </span>
+                  <label for="inputDonorPieceName" class="sr-only">Piece Name</label>
+                  <input type="name" name="inputDonorPieceName" id="inputDonorPieceName" class="form-control" placeholder="Name" required>
+                  <label for="inputDonorPieceType" class="sr-only">Piece Type</label>
+                  <input type="pieceType" name="inputDonorPieceType" id="inputDonorPieceType" class="form-control" placeholder="Type" required>
+                  <label for="inputDonorArtist" class="sr-only">Artist</label>
+                  <input type="artist" name="inputDonorArtist" id="inputDonorArtist" class="form-control" placeholder="Artist" required>
+                  <label for="inputDonorDateCreated" class="sr-only">Date Created</label>
+                  <input type="dateCreated" name="inputDonorDateCreated" id="inputDonorDateCreated" class="form-control" placeholder="Date Created" required>
+                  <label for="inputDonorDesc" class="sr-only">Description</label>
+                  <input type="desc" name="inputDonorDesc" id="inputDonorDesc" class="form-control" placeholder="Description" required>
+                  <button type="submit" id="submitButtonLogNewDonation" class="btn btn-success btn-sm"> Log new donation</button>
+                </form>
+            </div>
+          </div>
+        </div>
 
           
 

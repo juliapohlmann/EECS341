@@ -48,6 +48,22 @@ $(function(){
 	});
 }),
 $(function(){
+	$('#submitButtonLogNewDonation').click(function(){
+		console.log("Logging donation is working so far");
+		$.ajax({
+			url: '/logDonation',
+			data: $('form').serialize(),
+			type: 'POST',
+			success: function(response){
+				console.log(response);
+			},
+			error: function(error){
+				console.log(JSON.stringify(error));
+			}
+		});
+	});
+}),
+$(function(){
 	$('#submitButtonAddPieceToExhibit').click(function(){
 		console.log("Adding piece to exhibit is working so far");
 		$.ajax({
