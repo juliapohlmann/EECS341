@@ -1,7 +1,6 @@
 from flask import Flask, render_template, json, request, session, redirect
 from flaskext.mysql import MySQL
 from werkzeug import generate_password_hash, check_password_hash
-# from gevent.wsgi import WSGIServer
 
 mysql = MySQL()
 app = Flask(__name__)

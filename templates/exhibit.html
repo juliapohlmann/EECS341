@@ -15,77 +15,77 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/exhibit.js') }}"></script>
     <script>
-      $(function(){
-        $.ajax({
-          url : '/getActiveExhibits',
-          type : 'GET',
-          success: function(res){
-            console.log('Getting active exhibits');
-            var option = $('<option>')
-            
-            var exhibitObj = JSON.parse(res);
-            var exhibit = '';
-            
-            $.each(exhibitObj,function(index, value){
-              exhibit = $(option).clone();
-              $(exhibit).val(value.Id);
-              $(exhibit).text(value.Name);
-              $('#exhibitSelectList2').append(exhibit);
-              exhibit = $(option).clone();
-              $(exhibit).val(value.Id);
-              $(exhibit).text(value.Name);
-              $('#exhibitSelectList1').append(exhibit);
+        $(function() {
+                $.ajax({
+                    url: '/getActiveExhibits',
+                    type: 'GET',
+                    success: function(res) {
+                        console.log('Getting active exhibits');
+                        var option = $('<option>')
+
+                        var exhibitObj = JSON.parse(res);
+                        var exhibit = '';
+
+                        $.each(exhibitObj, function(index, value) {
+                            exhibit = $(option).clone();
+                            $(exhibit).val(value.Id);
+                            $(exhibit).text(value.Name);
+                            $('#exhibitSelectList2').append(exhibit);
+                            exhibit = $(option).clone();
+                            $(exhibit).val(value.Id);
+                            $(exhibit).text(value.Name);
+                            $('#exhibitSelectList1').append(exhibit);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }),
+            $(function() {
+                $.ajax({
+                    url: '/getPieceTypes',
+                    type: 'GET',
+                    success: function(res) {
+                        var option = $('<option>')
+
+                        var pieceObj = JSON.parse(res);
+                        var piece = '';
+
+                        $.each(pieceObj, function(index, value) {
+                            piece = $(option).clone();
+                            $(piece).val(value.Type);
+                            $(piece).text(value.Type);
+                            $('#typeSelectList').append(piece);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }),
+            $(function() {
+                $.ajax({
+                    url: '/getLocations',
+                    type: 'GET',
+                    success: function(res) {
+                        var option = $('<option>')
+
+                        var locationObj = JSON.parse(res);
+                        var location = '';
+
+                        $.each(locationObj, function(index, value) {
+                            location = $(option).clone();
+                            $(location).val(value.Location);
+                            $(location).text(value.Location);
+                            $('#locationSelectList').append(location);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
             });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }),
-      $(function(){
-        $.ajax({
-          url : '/getPieceTypes',
-          type : 'GET',
-          success: function(res){
-            var option = $('<option>')
-            
-            var pieceObj = JSON.parse(res);
-            var piece = '';
-            
-            $.each(pieceObj,function(index, value){
-              piece = $(option).clone();
-              $(piece).val(value.Type);
-              $(piece).text(value.Type);
-              $('#typeSelectList').append(piece);
-            });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }),
-      $(function(){
-        $.ajax({
-          url : '/getLocations',
-          type : 'GET',
-          success: function(res){
-            var option = $('<option>')
-            
-            var locationObj = JSON.parse(res);
-            var location = '';
-            
-            $.each(locationObj,function(index, value){
-              location = $(option).clone();
-              $(location).val(value.Location);
-              $(location).text(value.Location);
-              $('#locationSelectList').append(location);
-            });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      });
     </script>
 
 </head>
@@ -112,16 +112,16 @@
                         <a href="showDonorPage">Donors</a>
                     </li>
                     <li>
-                      <a href="showSignUp">Sign up</a>
+                        <a href="showSignUp">Sign up</a>
                     </li>
                     <li>
-                      <a href="showSignIn">Sign in</a>
+                        <a href="showSignIn">Sign in</a>
                     </li>
                     <li>
-                      <a href="/logout">Logout</a>
+                        <a href="/logout">Logout</a>
                     </li>
                     <li>
-                      <a href="/showAdmin">Admin</a>
+                        <a href="/showAdmin">Admin</a>
                     </li>
                 </ul>
             </div>
@@ -132,89 +132,89 @@
         <div class="row">
 
             <div class="col-md-3">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>What are all the exhibits?</div>
-                  <button type="submit" id="showAllExhibits" class="btn btn-success btn-sm">Show all exhibits</button>
-                  <ul class="list-group" id="allExhibits">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>What are all the exhibits?</div>
+                    <button type="submit" id="showAllExhibits" class="btn btn-success btn-sm">Show all exhibits</button>
+                    <ul class="list-group" id="allExhibits">
+                    </ul>
                 </div>
             </div>
 
             <div class="col-md-3 col-md-offset-1">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>What are all the current exhibits?</div>
-                  <button type="submit" id="showCurrentExhibits" class="btn btn-success btn-sm">Show current exhibits</button>
-                  <ul class="list-group" id="currentExhibits">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>What are all the current exhibits?</div>
+                    <button type="submit" id="showCurrentExhibits" class="btn btn-success btn-sm">Show current exhibits</button>
+                    <ul class="list-group" id="currentExhibits">
+                    </ul>
                 </div>
             </div>
 
             <div class="col-md-3 col-md-offset-2">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> What pieces are in this exhibit?</div>
-                <form class="form-seePiecesFromExhibit" id="seePiecesFromExhibit">
-                  <label for="selectExhibit2">Select exhibit:</label>
-                  <select class="form-control" name="exhibitSelectList2" id="exhibitSelectList2"> </select>
-                  <button type="button" id="submitButtonSeePiecesFromExhibit" class="btn btn-success btn-sm"> See all pieces in exhibit</button>
-                </form>
-                <ul class="list-group" id="piecesInExhibit">
-                </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What pieces are in this exhibit?</div>
+                    <form class="form-seePiecesFromExhibit" id="seePiecesFromExhibit">
+                        <label for="selectExhibit2">Select exhibit:</label>
+                        <select class="form-control" name="exhibitSelectList2" id="exhibitSelectList2"> </select>
+                        <button type="button" id="submitButtonSeePiecesFromExhibit" class="btn btn-success btn-sm"> See all pieces in exhibit</button>
+                    </form>
+                    <ul class="list-group" id="piecesInExhibit">
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
 
-      <div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> What exhibits were open from:</div>
-                <form class="form-seeExhibitsBetweenTimes">
-                  <label for="inputExhibitStartDate" class="sr-only">Start Date</label>
-                  <input type="startDate" name="inputExhibitStartDate" id="inputExhibitStartDate" class="form-control" placeholder="Start Date" required>
-                  <label for="inputExhibitEndDate" class="sr-only">End Date</label>
-                  <input type="endDate" name="inputExhibitEndDate" id="inputExhibitEndDate" class="form-control" placeholder="End Date" required>
-                  <button type="button" id="submitGetExhibitsByTimeFrame" class="btn btn-success btn-sm"> Find exhibits</button>
-                </form>
-                <ul class="list-group" id="exhibitsByTimeFrame">
-                </ul>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What exhibits were open from:</div>
+                    <form class="form-seeExhibitsBetweenTimes">
+                        <label for="inputExhibitStartDate" class="sr-only">Start Date</label>
+                        <input type="startDate" name="inputExhibitStartDate" id="inputExhibitStartDate" class="form-control" placeholder="Start Date" required>
+                        <label for="inputExhibitEndDate" class="sr-only">End Date</label>
+                        <input type="endDate" name="inputExhibitEndDate" id="inputExhibitEndDate" class="form-control" placeholder="End Date" required>
+                        <button type="button" id="submitGetExhibitsByTimeFrame" class="btn btn-success btn-sm"> Find exhibits</button>
+                    </form>
+                    <ul class="list-group" id="exhibitsByTimeFrame">
+                    </ul>
+                </div>
             </div>
-          </div>
+
+            <div class="col-md-3 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What pieces of a given type are in this exhibit?</div>
+                    <form class="form-seePiecesOfGivenTypeFromExhibit" id="seePiecesOfGivenTypeFromExhibit">
+                        <label for="selectExhibit1">Select exhibit:</label>
+                        <select class="form-control" name="exhibitSelectList1" id="exhibitSelectList1"> </select>
+                        <label for="selectType">Select type:</label>
+                        <select class="form-control" name="typeSelectList" id="typeSelectList"> </select>
+                        <button type="button" id="submitButtonSeePiecesOfGivenTypeFromExhibit" class="btn btn-success btn-sm"> See all pieces of type in exhibit</button>
+                    </form>
+                    <ul class="list-group" id="piecesInExhibitByType">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What exhibits have ever been in this location?</div>
+                    <form class="form-seeExhibitsInLocation" id="seeExhibitsInLocation">
+                        <label for="selectLocation">Select location:</label>
+                        <select class="form-control" name="locationSelectList" id="locationSelectList"> </select>
+                        <button type="button" id="submitButtonSeeExhibitsInLocation" class="btn btn-success btn-sm">See all exhibits that have been here</button>
+                    </form>
+                    <ul class="list-group" id="exhibitsInLocation">
+                    </ul>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-3 col-md-offset-1">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> What pieces of a given type are in this exhibit?</div>
-                <form class="form-seePiecesOfGivenTypeFromExhibit" id="seePiecesOfGivenTypeFromExhibit">
-                  <label for="selectExhibit1">Select exhibit:</label>
-                  <select class="form-control" name="exhibitSelectList1" id="exhibitSelectList1"> </select>
-                  <label for="selectType">Select type:</label>
-                  <select class="form-control" name="typeSelectList" id="typeSelectList"> </select>
-                  <button type="button" id="submitButtonSeePiecesOfGivenTypeFromExhibit" class="btn btn-success btn-sm"> See all pieces of type in exhibit</button>
-                </form>
-                <ul class="list-group" id="piecesInExhibitByType">
-                </ul>
-            </div>
-          </div>
-
-        <div class="col-md-3 col-md-offset-2">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> What exhibits have ever been in this location?</div>
-                <form class="form-seeExhibitsInLocation" id="seeExhibitsInLocation">
-                  <label for="selectLocation">Select location:</label>
-                  <select class="form-control" name="locationSelectList" id="locationSelectList"> </select>
-                  <button type="button" id="submitButtonSeeExhibitsInLocation" class="btn btn-success btn-sm">See all exhibits that have been here</button>
-                </form>
-                <ul class="list-group" id="exhibitsInLocation">
-                </ul>
-            </div>
-          </div>
-          
-      </div> 
+    </div>
 
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

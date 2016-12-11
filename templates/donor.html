@@ -39,16 +39,16 @@
                         <a href="showDonorPage">Donors</a>
                     </li>
                     <li>
-                      <a href="showSignUp">Sign up</a>
+                        <a href="showSignUp">Sign up</a>
                     </li>
                     <li>
-                      <a href="showSignIn">Sign in</a>
+                        <a href="showSignIn">Sign in</a>
                     </li>
                     <li>
-                      <a href="/logout">Logout</a>
+                        <a href="/logout">Logout</a>
                     </li>
                     <li>
-                      <a href="/showAdmin">Admin</a>
+                        <a href="/showAdmin">Admin</a>
                     </li>
                 </ul>
             </div>
@@ -59,47 +59,47 @@
         <div class="row">
 
             <div class="col-md-3">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>Who all are donors?</div>
-                  <button type="submit" id="showAllDonors" class="btn btn-success btn-sm">Show all donors</button>
-                  <ul class="list-group" id="allDonors">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>Who all are donors?</div>
+                    <button type="submit" id="showAllDonors" class="btn btn-success btn-sm">Show all donors</button>
+                    <ul class="list-group" id="allDonors">
+                    </ul>
                 </div>
             </div>
             <!-- getallpiecesdonated -->
             <div class="col-md-3 col-md-offset-1">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>What pieces were donated?</div>
-                  <button type="submit" id="showAllDonatedPieces" class="btn btn-success btn-sm">Show all donated pieces</button>
-                  <ul class="list-group" id="allDonatedPieces">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>What pieces were donated?</div>
+                    <button type="submit" id="showAllDonatedPieces" class="btn btn-success btn-sm">Show all donated pieces</button>
+                    <ul class="list-group" id="allDonatedPieces">
+                    </ul>
                 </div>
             </div>
 
-      <div class="row">
-        <div class="col-md-3 col-md-offset-2">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> Who donated what items on the given date:</div>
-                <form class="form-seeDonationByDate">
-                  <label for="inputStartDate" class="sr-only">Start Date</label>
-                  <input type="startDate" name="inputStartDate" id="inputStartDate" class="form-control" placeholder="Start Date" required>
-                  <button type="button" id="submitGetDonationsByDate" class="btn btn-success btn-sm"> Find donations on given date</button>
-                </form>
-                <ul class="list-group" id="donationByDate">
-                </ul>
+            <div class="row">
+                <div class="col-md-3 col-md-offset-2">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <span/> Who donated what items on the given date:</div>
+                        <form class="form-seeDonationByDate">
+                            <label for="inputStartDate" class="sr-only">Start Date</label>
+                            <input type="startDate" name="inputStartDate" id="inputStartDate" class="form-control" placeholder="Start Date" required>
+                            <button type="button" id="submitGetDonationsByDate" class="btn btn-success btn-sm"> Find donations on given date</button>
+                        </form>
+                        <ul class="list-group" id="donationByDate">
+                        </ul>
+                    </div>
+                </div>
             </div>
-          </div>
+
         </div>
-          
-      </div> 
 
-    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/exhibit.js') }}"></script>
-
+        <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/exhibit.js') }}"></script>
+    </div>
 </body>
 
 </html>

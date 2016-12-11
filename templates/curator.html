@@ -15,50 +15,50 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/curator.js') }}"></script>
     <script>
-      $(function(){
-        $.ajax({
-          url : '/showAllExpertises',
-          type : 'GET',
-          success: function(res){
-            var option = $('<option>');
+        $(function() {
+                $.ajax({
+                    url: '/showAllExpertises',
+                    type: 'GET',
+                    success: function(res) {
+                        var option = $('<option>');
 
-            var expertiseObj = JSON.parse(res);
-            var expertise = '';
-            
-            $.each(expertiseObj,function(index, value){
-              expertise = $(option).clone();
-              $(expertise).val(value.Expertise);
-              $(expertise).text(value.Expertise);
-              $('#expertiseSelectList').append(expertise);
-            });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }),
-      $(function(){
-        $.ajax({
-          url : '/showAllExhibits',
-          type : 'GET',
-          success: function(res){
-            var option = $('<option>');
+                        var expertiseObj = JSON.parse(res);
+                        var expertise = '';
 
-            var exhibitObj = JSON.parse(res);
-            var exhibit = '';
-            
-            $.each(exhibitObj,function(index, value){
-              exhibit = $(option).clone();
-              $(exhibit).val(value.Id);
-              $(exhibit).text(value.Name);
-              $('#exhibitSelectList').append(exhibit);
+                        $.each(expertiseObj, function(index, value) {
+                            expertise = $(option).clone();
+                            $(expertise).val(value.Expertise);
+                            $(expertise).text(value.Expertise);
+                            $('#expertiseSelectList').append(expertise);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }),
+            $(function() {
+                $.ajax({
+                    url: '/showAllExhibits',
+                    type: 'GET',
+                    success: function(res) {
+                        var option = $('<option>');
+
+                        var exhibitObj = JSON.parse(res);
+                        var exhibit = '';
+
+                        $.each(exhibitObj, function(index, value) {
+                            exhibit = $(option).clone();
+                            $(exhibit).val(value.Id);
+                            $(exhibit).text(value.Name);
+                            $('#exhibitSelectList').append(exhibit);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
             });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      });
     </script>
 
 </head>
@@ -85,16 +85,16 @@
                         <a href="showDonorPage">Donors</a>
                     </li>
                     <li>
-                      <a href="showSignUp">Sign up</a>
+                        <a href="showSignUp">Sign up</a>
                     </li>
                     <li>
-                      <a href="showSignIn">Sign in</a>
+                        <a href="showSignIn">Sign in</a>
                     </li>
                     <li>
-                      <a href="/logout">Logout</a>
+                        <a href="/logout">Logout</a>
                     </li>
                     <li>
-                      <a href="/showAdmin">Admin</a>
+                        <a href="/showAdmin">Admin</a>
                     </li>
                 </ul>
             </div>
@@ -105,75 +105,77 @@
         <div class="row">
 
             <div class="col-md-3">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>Who all are/were curators?</div>
-                  <button type="button" id="showAllCurators" class="btn btn-success btn-sm">Show all curators</button>
-                  <ul class="list-group" id="allCurators">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>Who all are/were curators?</div>
+                    <button type="button" id="showAllCurators" class="btn btn-success btn-sm">Show all curators</button>
+                    <ul class="list-group" id="allCurators">
+                    </ul>
                 </div>
             </div>
 
             <div class="col-md-3 col-md-offset-1">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>What curators are currently working at CMA?</div>
-                  <button type="submit" id="showCurrentCurators" class="btn btn-success btn-sm">Show all active curators</button>
-                  <ul class="list-group" id="allCurrentCurators">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>What curators are currently working at CMA?</div>
+                    <button type="submit" id="showCurrentCurators" class="btn btn-success btn-sm">Show all active curators</button>
+                    <ul class="list-group" id="allCurrentCurators">
+                    </ul>
                 </div>
             </div>
 
             <div class="col-md-3 col-md-offset-2">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/> What curators were active on this date?</div>
-                  <form class="form-seeCuratorsActiveOnGivenDate" id="seeCuratorsActiveOnGivenDate">
-                    <label for="inputStartDate" class="sr-only">Date</label>
-                    <input type="startDate" name="inputStartDate" id="inputStartDate" class="form-control" placeholder="Date" required>
-                    <button type="button" id="submitGetCuratorsByDate" class="btn btn-success btn-sm"> See curators at given date</button>
-                  </form>
-                  <ul class="list-group" id="curatorsByDate">
-                  </ul>
-              </div>
-            </div>
-
-        <div class="row">
-          <div class="col-md-3">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <form class="form-seeCuratorsByExpertise" id="seeCuratorsByExpertise">
-                    <span/>What curators have this expertise?</div>
-                    <label for="selectExpertise">Select expertise:</label>
-                    <select class="form-control" name="expertiseSelectList" id="expertiseSelectList"> </select>
-                    <button type="button" id="getCuratorsOfExpertise" class="btn btn-success btn-sm">Show curators with this expertise</button>
-                  </form>
-                  <ul class="list-group" id="curatorsByExpertise">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What curators were active on this date?</div>
+                    <form class="form-seeCuratorsActiveOnGivenDate" id="seeCuratorsActiveOnGivenDate">
+                        <label for="inputStartDate" class="sr-only">Date</label>
+                        <input type="startDate" name="inputStartDate" id="inputStartDate" class="form-control" placeholder="Date" required>
+                        <button type="button" id="submitGetCuratorsByDate" class="btn btn-success btn-sm"> See curators at given date</button>
+                    </form>
+                    <ul class="list-group" id="curatorsByDate">
+                    </ul>
                 </div>
             </div>
-            <div class="col-md-3 col-md-offset-1" >
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <form class="form-seeCuratorsByExhibit" id="seeCuratorsByExhibit">
-                    <span/>What curators have curated this exhibit?</div>
-                    <label for="selectExhibit">Select exhibit:</label>
-                    <select class="form-control" name="exhibitSelectList" id="exhibitSelectList"> </select>
-                    <button type="button" id="getCuratorsOfExhibit" class="btn btn-success btn-sm">Show curators of this exhibit</button>
-                  </form>
-                  <ul class="list-group" id="curatorsByExhibit">
-                  </ul>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <form class="form-seeCuratorsByExpertise" id="seeCuratorsByExpertise">
+                                <span/>What curators have this expertise?</div>
+                        <label for="selectExpertise">Select expertise:</label>
+                        <select class="form-control" name="expertiseSelectList" id="expertiseSelectList"> </select>
+                        <button type="button" id="getCuratorsOfExpertise" class="btn btn-success btn-sm">Show curators with this expertise</button>
+                        </form>
+                        <ul class="list-group" id="curatorsByExpertise">
+                        </ul>
+                    </div>
                 </div>
+                <div class="col-md-3 col-md-offset-1">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <form class="form-seeCuratorsByExhibit" id="seeCuratorsByExhibit">
+                                <span/>What curators have curated this exhibit?</div>
+                        <label for="selectExhibit">Select exhibit:</label>
+                        <select class="form-control" name="exhibitSelectList" id="exhibitSelectList"> </select>
+                        <button type="button" id="getCuratorsOfExhibit" class="btn btn-success btn-sm">Show curators of this exhibit</button>
+                        </form>
+                        <ul class="list-group" id="curatorsByExhibit">
+                        </ul>
+                    </div>
+                </div>
+
             </div>
-          
-      </div> 
-      <div class="row">
-      </div>
+            <div class="row">
+            </div>
 
-    <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/exhibit.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+            <script src="{{ url_for('static', filename='js/exhibit.js') }}"></script>
 
+        </div>
+    </div>
 </body>
 
 </html>

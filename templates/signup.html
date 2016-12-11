@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
     <title>Sign up</title>
-     
+
     <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/signup.css') }}" rel="stylesheet">
 
@@ -13,7 +15,7 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="/">CMA Explorer</a>
             </div>
-          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
                         <a href="showExhibitPage">Exhibits</a>
@@ -28,47 +30,47 @@
                         <a href="showDonorPage">Donors</a>
                     </li>
                     <li>
-                      <a href="showSignUp">Sign up</a>
+                        <a href="showSignUp">Sign up</a>
                     </li>
                     <li>
-                      <a href="showSignIn">Sign in</a>
+                        <a href="showSignIn">Sign in</a>
                     </li>
                     <li>
-                      <a href="/logout">Logout</a>
+                        <a href="/logout">Logout</a>
                     </li>
                     <li>
-                      <a href="/showAdmin">Admin</a>
+                        <a href="/showAdmin">Admin</a>
                     </li>
                 </ul>
             </div>
-          </div>
+        </div>
     </nav>
     <div class="container">
-      <div class="row">
-          <div class="col-md-4 col-md-offset-7">
-              <div class="panel panel-default">
-                  <div class="panel-heading">
-                      <span/> Sign Up</div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> Sign Up</div>
 
-<!--                   <div class="panel-body">
- -->                    <form class="form-signin">
-                      <label for="inputUsername" class="sr-only">Username</label>
-                      <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-                      <label for="inputEmail" class="sr-only">Email address</label>
-                      <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                      <label for="inputPassword" class="sr-only">Password</label>
-                      <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-                      <button type="submit" id="submitButtonSignUp" class="btn btn-success btn-sm"> Sign up</button>
-                    </form>
-<!--                   </div>
- -->              </div>
-          </div>
-      </div>
+                    <div class="panel-body">
+                        <form class="form-signin">
+                            <label for="inputUsername" class="sr-only">Username</label>
+                            <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            <label for="inputEmail" class="sr-only">Email address</label>
+                            <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <button type="submit" id="submitButtonSignUp" class="btn btn-success btn-sm"> Sign up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
+</body>
 
-  <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/signup.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/signup.js') }}"></script>
 
 </html>

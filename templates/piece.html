@@ -15,96 +15,96 @@
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/piece.js') }}"></script>
     <script>
-      $(function(){
-        $.ajax({
-          url : '/showAllPieces',
-          type : 'GET',
-          success: function(res){
-            var option = $('<option>');
+        $(function() {
+                $.ajax({
+                    url: '/showAllPieces',
+                    type: 'GET',
+                    success: function(res) {
+                        var option = $('<option>');
 
-            var pieceObj = JSON.parse(res);
-            var piece = '';
-            
-            $.each(pieceObj,function(index, value){
-              piece = $(option).clone();
-              $(piece).val(value.Id);
-              $(piece).text(value.Name + ' (' + value.Artist + ')');
-              $('#pieceSelectList').append(piece);
+                        var pieceObj = JSON.parse(res);
+                        var piece = '';
+
+                        $.each(pieceObj, function(index, value) {
+                            piece = $(option).clone();
+                            $(piece).val(value.Id);
+                            $(piece).text(value.Name + ' (' + value.Artist + ')');
+                            $('#pieceSelectList').append(piece);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }),
+            $(function() {
+                $.ajax({
+                    url: '/getPieceTypes',
+                    type: 'GET',
+                    success: function(res) {
+                        var option = $('<option>');
+
+                        var pieceObj = JSON.parse(res);
+                        var piece = '';
+
+                        $.each(pieceObj, function(index, value) {
+                            piece = $(option).clone();
+                            $(piece).val(value.Type);
+                            $(piece).text(value.Type);
+                            $('#typeSelectList').append(piece);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }),
+            $(function() {
+                $.ajax({
+                    url: '/getUnavailablePieces',
+                    type: 'GET',
+                    success: function(res) {
+                        var option = $('<option>');
+
+                        var pieceObj = JSON.parse(res);
+                        var piece = '';
+
+                        $.each(pieceObj, function(index, value) {
+                            piece = $(option).clone();
+                            $(piece).val(value.Id);
+                            $(piece).text(value.Name + ' (' + value.Artist + ')');
+                            $('#pieceUnavailableSelectList').append(piece);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
+            }),
+            $(function() {
+                $.ajax({
+                    url: '/getArtists',
+                    type: 'GET',
+                    success: function(res) {
+                        console.log('Trying to get all artists');
+                        console.log(res);
+                        var option = $('<option>');
+
+                        var artistObj = JSON.parse(res);
+                        var artist = '';
+
+                        $.each(artistObj, function(index, value) {
+                            artist = $(option).clone();
+                            $(artist).val(value.Artist);
+                            $(artist).text(value.Artist);
+                            $('#artistSelectList').append(artist);
+                        });
+                    },
+                    error: function(error) {
+                        console.log(error);
+                    }
+                });
             });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }),
-      $(function(){
-        $.ajax({
-          url : '/getPieceTypes',
-          type : 'GET',
-          success: function(res){
-            var option = $('<option>');
-            
-            var pieceObj = JSON.parse(res);
-            var piece = '';
-            
-            $.each(pieceObj,function(index, value){
-              piece = $(option).clone();
-              $(piece).val(value.Type);
-              $(piece).text(value.Type);
-              $('#typeSelectList').append(piece);
-            });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }),
-      $(function(){
-        $.ajax({
-          url : '/getUnavailablePieces',
-          type : 'GET',
-          success: function(res){
-            var option = $('<option>');
-            
-            var pieceObj = JSON.parse(res);
-            var piece = '';
-            
-            $.each(pieceObj,function(index, value){
-              piece = $(option).clone();
-              $(piece).val(value.Id);
-              $(piece).text(value.Name + ' (' + value.Artist + ')');
-              $('#pieceUnavailableSelectList').append(piece);
-            });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      }),
-      $(function(){
-        $.ajax({
-          url : '/getArtists',
-          type : 'GET',
-          success: function(res){
-            console.log('Trying to get all artists');
-            console.log(res);
-            var option = $('<option>');
-            
-            var artistObj = JSON.parse(res);
-            var artist = '';
-            
-            $.each(artistObj,function(index, value){
-              artist = $(option).clone();
-              $(artist).val(value.Artist);
-              $(artist).text(value.Artist);
-              $('#artistSelectList').append(artist);
-            });
-          },
-          error: function(error){
-            console.log(error);
-          }
-        });
-      });
 
     </script>
 
@@ -132,16 +132,16 @@
                         <a href="showDonorPage">Donors</a>
                     </li>
                     <li>
-                      <a href="showSignUp">Sign up</a>
+                        <a href="showSignUp">Sign up</a>
                     </li>
                     <li>
-                      <a href="showSignIn">Sign in</a>
+                        <a href="showSignIn">Sign in</a>
                     </li>
                     <li>
-                      <a href="/logout">Logout</a>
+                        <a href="/logout">Logout</a>
                     </li>
                     <li>
-                      <a href="/showAdmin">Admin</a>
+                        <a href="/showAdmin">Admin</a>
                     </li>
                 </ul>
             </div>
@@ -152,100 +152,102 @@
         <div class="row">
 
             <div class="col-md-3">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>What are all the pieces?</div>
-                  <button type="submit" id="showAllPieces" class="btn btn-success btn-sm">Show all pieces</button>
-                  <ul class="list-group" id="allPieces">
-                  </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>What are all the pieces?</div>
+                    <button type="submit" id="showAllPieces" class="btn btn-success btn-sm">Show all pieces</button>
+                    <ul class="list-group" id="allPieces">
+                    </ul>
                 </div>
             </div>
 
             <div class="col-md-3 col-md-offset-1">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <form class="form-seeDetailsAboutPiece" id="seeDetailsAboutPiece">
-                    <span/>Find out more about this piece:</div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <form class="form-seeDetailsAboutPiece" id="seeDetailsAboutPiece">
+                            <span/>Find out more about this piece:</div>
                     <label for="selectPiece">Select piece:</label>
                     <select class="form-control" name="pieceSelectList" id="pieceSelectList"> </select>
                     <button type="button" id="getInfoOnGivenPiece" class="btn btn-success btn-sm">Show current piece</button>
-                  </form>
-                  <ul class="list-group" id="detailsAboutPiece">
-                  </ul>
+                    </form>
+                    <ul class="list-group" id="detailsAboutPiece">
+                    </ul>
                 </div>
             </div>
 
             <div class="col-md-3 col-md-offset-2">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> What pieces did this artist make?</div>
-                <form class="form-seePiecesFromArtist" id="seePiecesFromExhibit">
-                  <label for="selectArtist">Select artist:</label>
-                  <select class="form-control" name="artistSelectList" id="artistSelectList"> </select>
-                  <button type="button" id="submitButtonSeePiecesFromArtist" class="btn btn-success btn-sm"> See all pieces by the artist</button>
-                </form>
-                <ul class="list-group" id="piecesByArtist">
-                </ul>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What pieces did this artist make?</div>
+                    <form class="form-seePiecesFromArtist" id="seePiecesFromExhibit">
+                        <label for="selectArtist">Select artist:</label>
+                        <select class="form-control" name="artistSelectList" id="artistSelectList"> </select>
+                        <button type="button" id="submitButtonSeePiecesFromArtist" class="btn btn-success btn-sm"> See all pieces by the artist</button>
+                    </form>
+                    <ul class="list-group" id="piecesByArtist">
+                    </ul>
+                </div>
             </div>
-          </div>
         </div>
 
-      <div class="row">
-        <div class="col-md-3">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> What pieces are there of a give type?</div>
-                <form class="form-seePiecesOfGivenType" id="seePiecesOfGivenType">
-                  <label for="selectType">Select type:</label>
-                  <select class="form-control" name="typeSelectList" id="typeSelectList"> </select>
-                  <button type="button" id="submitButtonSeePiecesOfGivenType" class="btn btn-success btn-sm"> See all pieces of type</button>
-                </form>
-                <ul class="list-group" id="piecesByType">
-                </ul>
-            </div>
-          </div>
-
-        <div class="col-md-3 col-md-offset-1">
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <span/> What pieces were created in this time range?</div>
-                <form class="form-seePiecesOfGivenTypeFromExhibit" id="seePiecesOfGivenTypeFromExhibit">
-                  <label for="inputStartDate" class="sr-only">Start Date</label>
-                  <input type="startDate" name="inputStartDate" id="inputStartDate" class="form-control" placeholder="Start Date" required>
-                  <label for="inputEndDate" class="sr-only">End Date</label>
-                  <input type="endDate" name="inputEndDate" id="inputEndDate" class="form-control" placeholder="End Date" required>
-                  <button type="button" id="submitButtonSeePiecesInGivenTimeFrame" class="btn btn-success btn-sm"> See pieces of given time period</button>
-                </form>
-                <ul class="list-group" id="piecesInTimePeriod">
-                </ul>
-            </div>
-          </div>
-
-          <div class="col-md-3 col-md-offset-2">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <span/>What pieces are not currently in galleries?</div>
-                  <button type="submit" id="showAllAvailablePieces" class="btn btn-success btn-sm">Show all pieces</button>
-                  <ul class="list-group" id="allAvailablePieces">
-                  </ul>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What pieces are there of a give type?</div>
+                    <form class="form-seePiecesOfGivenType" id="seePiecesOfGivenType">
+                        <label for="selectType">Select type:</label>
+                        <select class="form-control" name="typeSelectList" id="typeSelectList"> </select>
+                        <button type="button" id="submitButtonSeePiecesOfGivenType" class="btn btn-success btn-sm"> See all pieces of type</button>
+                    </form>
+                    <ul class="list-group" id="piecesByType">
+                    </ul>
                 </div>
-          </div>
+            </div>
+
+            <div class="col-md-3 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> What pieces were created in this time range?</div>
+                    <form class="form-seePiecesOfGivenTypeFromExhibit" id="seePiecesOfGivenTypeFromExhibit">
+                        <label for="inputStartDate" class="sr-only">Start Date</label>
+                        <input type="startDate" name="inputStartDate" id="inputStartDate" class="form-control" placeholder="Start Date" required>
+                        <label for="inputEndDate" class="sr-only">End Date</label>
+                        <input type="endDate" name="inputEndDate" id="inputEndDate" class="form-control" placeholder="End Date" required>
+                        <button type="button" id="submitButtonSeePiecesInGivenTimeFrame" class="btn btn-success btn-sm"> See pieces of given time period</button>
+                    </form>
+                    <ul class="list-group" id="piecesInTimePeriod">
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-md-3 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>What pieces are not currently in galleries?</div>
+                    <button type="submit" id="showAllAvailablePieces" class="btn btn-success btn-sm">Show all pieces</button>
+                    <ul class="list-group" id="allAvailablePieces">
+                    </ul>
+                </div>
+            </div>
         </div>
         <div class="row">
-          <div class="col-md-3">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <form class="form-seePiecesExhibit" id="seePiecesExhibit">
-                    <span/>Find out what exhibit this piece is in:</div>
-                    <label for="selectPiece">Select piece:</label>
-                    <select class="form-control" name="pieceUnavailableSelectList" id="pieceUnavailableSelectList"> </select>
-                    <button type="button" id="getExhibitOfPiece" class="btn btn-success btn-sm">Show current piece</button>
-                  </form>
-                  <ul class="list-group" id="exhibitOfPiece">
-                  </ul>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/>Find out what exhibit this piece is in:</div>
+                    <form class="form-seePiecesExhibit" id="seePiecesExhibit">
+                        <label for="selectPiece">Select piece:</label>
+                        <select class="form-control" name="pieceUnavailableSelectList" id="pieceUnavailableSelectList"> </select>
+                        <button type="button" id="getExhibitOfPiece" class="btn btn-success btn-sm">Show current piece</button>
+                    </form>
                 </div>
+
+                <ul class="list-group" id="exhibitOfPiece">
+                </ul>
             </div>
-      </div> 
+        </div>
+    </div>
 
     <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>

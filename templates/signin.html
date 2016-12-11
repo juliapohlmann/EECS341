@@ -1,7 +1,9 @@
 <!DOCTYPE html>
+<html lang="en">
+
 <head>
     <title>Sign in</title>
-     
+
     <link href="{{ url_for('static', filename='css/bootstrap.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/signup.css') }}" rel="stylesheet">
 
@@ -28,43 +30,44 @@
                         <a href="showDonorPage">Donors</a>
                     </li>
                     <li>
-                      <a href="showSignUp">Sign up</a>
+                        <a href="showSignUp">Sign up</a>
                     </li>
                     <li>
-                      <a href="showSignIn">Sign in</a>
+                        <a href="showSignIn">Sign in</a>
                     </li>
                     <li>
-                      <a href="/logout">Logout</a>
+                        <a href="/logout">Logout</a>
                     </li>
                     <li>
-                      <a href="/showAdmin">Admin</a>
+                        <a href="/showAdmin">Admin</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container">
-      <div class="row">
-          <div class="col-md-4 col-md-offset-7">
-              <div class="panel panel-default">
-                  <div class="panel-heading">
-                      <span/> Sign In</div>
-
-                      <form class="form-signin">
-                        <label for="inputUsername" class="sr-only">Username</label>
-                        <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
-                        <button type="submit" id="submitButtonSignIn" class="btn btn-success btn-sm"> Sign in</button>
-                      </form>
-                  </div>
-          </div>
-      </div>
+        <div class="row">
+            <div class="col-md-4 col-md-offset-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span/> Sign In</div>
+                    <div class="panel-body">
+                        <form class="form-signin">
+                            <label for="inputUsername" class="sr-only">Username</label>
+                            <input type="username" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                            <label for="inputPassword" class="sr-only">Password</label>
+                            <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+                            <button type="submit" id="submitButtonSignIn" class="btn btn-success btn-sm"> Sign in</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-  </body>
+</body>
 
-  <script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='js/signin.js') }}"></script>
+<script src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/signin.js') }}"></script>
 
 </html>
