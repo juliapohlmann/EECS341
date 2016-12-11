@@ -57,17 +57,12 @@ def logout():
 @app.route('/getCuratorsByExhibit', methods=['POST'])
 def getCuratorsByExhibit():
 	try:
-    	# return json.dumps({'message':'here'})
-
 		_exhibit = request.form['exhibitSelectList']
-		# return json.dumps({'message': _piece})
 
 		con = mysql.connect()
 		cursor = con.cursor()
 		cursor.callproc('getcuratorsbyexhibit',(_exhibit,))
 		curators = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
-		# return json.dumps({'message': pieces})
 
 		curators_dict = []
 		for curator in curators:
@@ -81,17 +76,13 @@ def getCuratorsByExhibit():
 @app.route('/getCuratorsByExpertise', methods=['POST'])
 def getCuratorsByExpertise():
 	try:
-    	# return json.dumps({'message':'here'})
 
 		_expertise = request.form['expertiseSelectList']
-		# return json.dumps({'message': _piece})
 
 		con = mysql.connect()
 		cursor = con.cursor()
 		cursor.callproc('getcuratorsbyexpertise',(_expertise,))
 		curators = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
-		# return json.dumps({'message': pieces})
 
 		curators_dict = []
 		for curator in curators:
@@ -123,17 +114,13 @@ def showAllExpertises():
 @app.route('/getCuratorsByDate', methods=['POST'])
 def getCuratorsByDate():
 	try:
-    	# return json.dumps({'message':'here'})
 
 		_date = request.form['inputStartDate']
-		# return json.dumps({'message': _piece})
 
 		con = mysql.connect()
 		cursor = con.cursor()
 		cursor.callproc('getcuratorsactiveondate',(_date,))
 		curators = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
-		# return json.dumps({'message': pieces})
 
 		curators_dict = []
 		for curator in curators:
@@ -186,17 +173,13 @@ def showAllCurators():
 @app.route('/getDonationsByDate', methods=['POST'])
 def getDonationsByDate():
 	try:
-    	# return json.dumps({'message':'here'})
 
 		_date = request.form['inputStartDate']
-		# return json.dumps({'message': _piece})
 
 		con = mysql.connect()
 		cursor = con.cursor()
 		cursor.callproc('getdonationsbydate',(_date,))
 		pieces = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
-		# return json.dumps({'message': pieces})
 
 		pieces_dict = []
 		for piece in pieces:
@@ -212,9 +195,6 @@ def getDonationsByDate():
 @app.route('/showAllDonatedPieces')
 def showAllDonatedPieces():
     try:
-    	# return json.dumps({'yay':'abc'})
-    	# _type = request.form.get('typeSelectList')
-    	# _piece = request.form['pieceSelectList']
 
         con = mysql.connect()
         cursor = con.cursor()
@@ -227,7 +207,6 @@ def showAllDonatedPieces():
                     'Name': piece[0],
                     'Artist':piece[1]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error1':str(ex)})
@@ -246,7 +225,6 @@ def showAllDonors():
                     'Id': donor[0],
                     'Name': donor[1]}
             donors_dict.append(donor_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(donors_dict)
         
     except Exception as ex:
@@ -255,17 +233,13 @@ def showAllDonors():
 @app.route('/getPieceLocation', methods=['POST'])
 def getPieceLocation():
 	try:
-    	# return json.dumps({'message':'here'})
 
 		_piece = request.form['pieceUnavailableSelectList']
-		# return json.dumps({'message': _piece})
 
 		con = mysql.connect()
 		cursor = con.cursor()
 		cursor.callproc('getpiecelocation',(_piece,))
 		pieces = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
-		# return json.dumps({'message': pieces})
 
 		pieces_dict = []
 		for piece in pieces:
@@ -273,7 +247,6 @@ def getPieceLocation():
 					'ExhibitName': piece[0],
 					'ExhibitLocation': piece[1]}
 			pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
 		return json.dumps(pieces_dict)
 	except Exception as ex:
 		return json.dumps({'error':str(ex)})
@@ -281,7 +254,6 @@ def getPieceLocation():
 @app.route('/getPiecesByTimePeriod', methods=['POST'])
 def getPiecesByTimePeriod():
 	try:
-    	# return json.dumps({'message':'here'})
 
 		_startDate = request.form['inputStartDate']
 		_endDate = request.form['inputEndDate']    	
@@ -289,7 +261,6 @@ def getPiecesByTimePeriod():
 		cursor = con.cursor()
 		cursor.callproc('getpiecesintimerange',(_startDate,_endDate))
 		pieces = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
 
 		pieces_dict = []
 		for piece in pieces:
@@ -298,7 +269,6 @@ def getPiecesByTimePeriod():
 					'Name': piece[1],
 					'Artist': piece[2]}
 			pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
 		return json.dumps(pieces_dict)
 	except Exception as ex:
 		return json.dumps({'error':str(ex)})
@@ -306,9 +276,7 @@ def getPiecesByTimePeriod():
 @app.route('/getPiecesByType', methods=['POST'])
 def getPiecesByType():
     try:
-    	# return json.dumps({'yay':'abc'})
     	_type = request.form.get('typeSelectList')
-    	# _piece = request.form['pieceSelectList']
 
         con = mysql.connect()
         cursor = con.cursor()
@@ -322,7 +290,6 @@ def getPiecesByType():
                     'Name': piece[1],
                     'Artist':piece[2]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error1':str(ex)})
@@ -330,9 +297,7 @@ def getPiecesByType():
 @app.route('/getPiecesByArtist', methods=['POST'])
 def getPiecesByArtist():
     try:
-    	# return json.dumps({'yay':'abc'})
     	_artist = request.form.get('artistSelectList')
-    	# _piece = request.form['pieceSelectList']
 
         con = mysql.connect()
         cursor = con.cursor()
@@ -345,7 +310,6 @@ def getPiecesByArtist():
                     'Id': piece[0],
                     'Name': piece[1]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error1':str(ex)})
@@ -363,7 +327,6 @@ def getArtists():
             artist_dict = {
                     'Artist': artist[0]}
             artists_dict.append(artist_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(artists_dict)
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
@@ -371,9 +334,7 @@ def getArtists():
 @app.route('/getPieceById', methods=['POST'])
 def getPieceById():
     try:
-    	# return json.dumps({'yay':'abc'})
     	_piece = request.form.get('pieceSelectList')
-    	# _piece = request.form['pieceSelectList']
 
         con = mysql.connect()
         cursor = con.cursor()
@@ -391,7 +352,6 @@ def getPieceById():
                     'Available': piece[5],
                     'Name': piece[6]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error1':str(ex)})
@@ -415,7 +375,6 @@ def showAllPieces():
                     'Available': piece[5],
                     'Name': piece[6]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
         
     except Exception as ex:
@@ -424,14 +383,11 @@ def showAllPieces():
 @app.route('/getExhibitsByLocation', methods=['POST'])
 def getExhibitsByLocation():
 	try:
-    	# return json.dumps({'message':'here'})
 		_location = request.form.get('locationSelectList')
-		# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
 		con = mysql.connect()
 		cursor = con.cursor()
 		cursor.callproc('getexhibitbylocation',(_location,))
 		exhibits = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
 
 		exhibits_dict = []
 		for exhibit in exhibits:
@@ -439,7 +395,6 @@ def getExhibitsByLocation():
 					'Id': exhibit[0],
 					'Name': exhibit[1]}
 			exhibits_dict.append(exhibit_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
 		return json.dumps(exhibits_dict)
 	except Exception as ex:
 		return json.dumps({'error':str(ex)})
@@ -458,7 +413,6 @@ def getLocations():
                     'Location': location[0]
                     }
             locations_dict.append(location_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(locations_dict)
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
@@ -466,17 +420,14 @@ def getLocations():
 @app.route('/getPiecesFromExhibitByType', methods=['POST'])
 def getPiecesFromExhibitByType():
     try:
-    	# return json.dumps({'message':'here'})
 
     	_exhibit = request.form.get('exhibitSelectList1')
     	_type = request.form.get('typeSelectList')
-    	# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
 
         con = mysql.connect()
         cursor = con.cursor()
         cursor.callproc('getpiecesfromexhibitbytype',(_exhibit, _type))
         pieces = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
 
         pieces_dict = []
         for piece in pieces:
@@ -485,7 +436,6 @@ def getPiecesFromExhibitByType():
                     'Name': piece[1],
                     'Artist': piece[2]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error1':str(ex)})
@@ -503,7 +453,6 @@ def getPieceTypes():
             piece_dict = {
                     'Type': piece[0]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
@@ -511,16 +460,13 @@ def getPieceTypes():
 @app.route('/getExhibitsByTimeFrame', methods=['POST'])
 def getExhibitsByTimeFrame():
 	try:
-    	# return json.dumps({'message':'here'})
 
 		_startDate = request.form['inputExhibitStartDate']
 		_endDate = request.form['inputExhibitEndDate']    	
-		# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
 		con = mysql.connect()
 		cursor = con.cursor()
 		cursor.callproc('getexhibitsbytimeframe',(_startDate,_endDate))
 		exhibits = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
 
 		exhibits_dict = []
 		for exhibit in exhibits:
@@ -531,7 +477,6 @@ def getExhibitsByTimeFrame():
 					'Start Date': exhibit[3],
 					'End Date': exhibit[4]}
 			exhibits_dict.append(exhibit_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
 		return json.dumps(exhibits_dict)
 	except Exception as ex:
 		return json.dumps({'error':str(ex)})
@@ -540,16 +485,13 @@ def getExhibitsByTimeFrame():
 @app.route('/getPiecesFromExhibit', methods=['POST'])
 def getPiecesFromExhibit():
     try:
-    	# return json.dumps({'message':'here'})
 
     	_exhibit = request.form.get('exhibitSelectList2')
-    	# return json.dumps({'message':'exhibit: ' + str(_exhibit)})
 
         con = mysql.connect()
         cursor = con.cursor()
         cursor.callproc('getpiecesfromexhibit',(_exhibit,))
         pieces = cursor.fetchall()
-    	# return json.dumps({'message':'here'})
 
         pieces_dict = []
         for piece in pieces:
@@ -558,7 +500,6 @@ def getPiecesFromExhibit():
                     'Name': piece[1],
                     'Artist': piece[2]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error1':str(ex)})
@@ -568,9 +509,6 @@ def addPieceToExhibit():
 	if session.get('user'):
 		_piece = request.form['pieceSelectList']
 		_exhibit = request.form['exhibitSelectList']
-		# _piece = request.form['pieceSelectList']
-		# _exhibit = request.form['exhibitSelectList']
-		# return json.dumps({'message':'Piece: ' + _piece})
 
 		try:
 			connection = mysql.connect()
@@ -603,7 +541,6 @@ def showAllExhibits():
                     'Location': exhibit[1], 
                     'Id': exhibit[2]}
             exhibits_dict.append(exhibit_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(exhibits_dict)
         
     except Exception as ex:
@@ -624,7 +561,6 @@ def getUnavailablePieces():
                     'Name': piece[1],
                     'Artist': piece[2]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
@@ -644,7 +580,6 @@ def getAvailablePieces():
                     'Name': piece[1],
                     'Artist': piece[2]}
             pieces_dict.append(piece_dict)
-            # return json.dumps({'yay':str(exhibits_dict)})
         return json.dumps(pieces_dict)
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
@@ -652,24 +587,19 @@ def getAvailablePieces():
 @app.route('/getActiveExhibits')
 def getActiveExhibits():
     try:
-        if session.get('user'):
+        con = mysql.connect()
+        cursor = con.cursor()
+        cursor.callproc('getActiveExhibits',())
+        exhibits = cursor.fetchall()
 
-            con = mysql.connect()
-            cursor = con.cursor()
-            cursor.callproc('getActiveExhibits',())
-            exhibits = cursor.fetchall()
-
-            exhibits_dict = []
-            for exhibit in exhibits:
-                exhibit_dict = {
-                        'Id': exhibit[0],
-                        'Name': exhibit[1],
-                        'Location': exhibit[2]}
-                exhibits_dict.append(exhibit_dict)
-                # return json.dumps({'yay':str(exhibits_dict)})
-            return json.dumps(exhibits_dict)
-        else:
-			return json.dumps({'error':'Unauthorized access, please log in'})
+        exhibits_dict = []
+        for exhibit in exhibits:
+            exhibit_dict = {
+                    'Id': exhibit[0],
+                    'Name': exhibit[1],
+                    'Location': exhibit[2]}
+            exhibits_dict.append(exhibit_dict)
+        return json.dumps(exhibits_dict)
     except Exception as ex:
     	return json.dumps({'error':str(ex)})
 
@@ -821,7 +751,6 @@ def signUp():
 
 @app.route('/signIn', methods=['POST'])
 def signIn():
-	# return json.dumps({'message':'Success in creating user'})
 
 	try:
 		_username = request.form['inputUsername']
@@ -852,8 +781,6 @@ if __name__ == "__main__":
 	app.debug = True
 	threaded=True, 
 	app.run(port=5000)
-	# http_server = WSGIServer(('', 5000), app)
-	# http_server.serve_forever()
 
 
 

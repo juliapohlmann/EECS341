@@ -17,7 +17,6 @@ $(function(){
 	              $(exhibit).addClass('list-group-item');
 	              $(exhibit).val(value.Name + ' (' + value.Location + ')');
 	              $(exhibit).text(value.Name + ' (' + value.Location + ')');
-	              // $(exhibit).text(value.Location);
 	              $('#allExhibits').append(exhibit);
 	              exhibit = '';
 	          	});
@@ -46,7 +45,6 @@ $(function(){
 	              $(exhibit).addClass('list-group-item');
 	              $(exhibit).val(value.Name + ' (' + value.Location + ')');
 	              $(exhibit).text(value.Name + ' (' + value.Location + ')');
-	              // $(exhibit).text(value.Location);
 	              $('#currentExhibits').append(exhibit);
 	          	});
 			},
@@ -75,7 +73,6 @@ $(function(){
 	              $(exhibit).addClass('list-group-item');
 	              $(exhibit).val(value.Name + ' (' + value.Location + ')');
 	              $(exhibit).text(value.Name + ' (' + value.Location + ')');
-	              // $(exhibit).text(value.Location);
 	              $('#exhibitsByTimeFrame').append(exhibit);
 	          	});
 			},
@@ -106,7 +103,6 @@ $(function(){
 	              $(piece).addClass('list-group-item');
 	              $(piece).val(value.Name + ' (' + value.Artist + ')');
 	              $(piece).text(value.Name + ' (' + value.Artist + ')');
-	              // $(exhibit).text(value.Location);
 	              console.log('index: ' + index + ' piece: ' + value.Name)
 	              $('#piecesInExhibitByType').append(piece);
 	          	});
@@ -136,7 +132,6 @@ $(function(){
 	              $(exhibit).addClass('list-group-item');
 	              $(exhibit).val(value.Name);
 	              $(exhibit).text(value.Name);
-	              // $(exhibit).text(value.Location);
 	              $('#exhibitsInLocation').append(exhibit);
 	          	});
 			},
@@ -167,7 +162,6 @@ $(function(){
 	              $(piece).addClass('list-group-item');
 	              $(piece).val(value.Name + ' (' + value.Artist + ')');
 	              $(piece).text(value.Name + ' (' + value.Artist + ')');
-	              // $(exhibit).text(value.Location);
 	              console.log('index: ' + index + ' piece: ' + value.Name)
 	              $('#piecesInExhibit').append(piece);
 	          	});
